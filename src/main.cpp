@@ -15,13 +15,15 @@ try
 
     size_t RAX_value = 0;
     {
-        std::stringstream ss { argv[1] };
+        std::stringstream ss;
+        ss << std::hex << argv[1];
         ss >> RAX_value;
     }
 
     size_t RCX_value = 0;
     {
-        std::stringstream ss { argv[2] };
+        std::stringstream ss;
+        ss << std::hex << argv[2];
         ss >> RCX_value;
     }
 
