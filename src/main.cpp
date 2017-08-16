@@ -10,7 +10,7 @@ try
 {
     if (argc != 3)
     {
-        throw std::invalid_argument("Usage: cpuid-cli RAX RCX");
+        throw std::invalid_argument("Usage: cpuid-cli RAX RCX. (hex-values expected)");
     }
 
     size_t RAX_value = 0;
