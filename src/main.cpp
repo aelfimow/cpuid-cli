@@ -3,6 +3,8 @@
 
 static_assert(sizeof(size_t) == 8, "size_t expected to be 64 bit");
 
+extern "C" void execute_cpuid(size_t RAX_value, size_t RCX_value, size_t *pOut);
+
 int main(int argc, char *argv[])
 try
 {
@@ -22,6 +24,12 @@ try
         std::stringstream ss { argv[2] };
         ss >> RCX_value;
     }
+
+    size_t output[4];
+
+    execute_cpuid(RAX_value, RCX_value, output);
+
+    std::cout << std::hex << output[0] << ";" << output[1] << ";" << output[2] << ";" << output[3] << std::endl;
 
     return EXIT_SUCCESS;
 }
