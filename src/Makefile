@@ -23,3 +23,17 @@ cpuid_windows:
 
 cpuid_linux:
 	as cpuid_func_linux.S -o cpuid_func_linux.o --64
+
+run_linux:
+	./cpuid-cli 0 0
+	./cpuid-cli 1 0
+	./cpuid-cli 2 0
+	./cpuid-cli 3 0
+	./cpuid-cli 4 0
+	./cpuid-cli 5 0
+	./cpuid-cli 6 0
+	./cpuid-cli 7 0
+	./cpuid-cli 8 0
+	./cpuid-cli 9 0
+	./cpuid-cli a 0
+	./cpuid-cli b 0
