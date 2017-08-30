@@ -28,10 +28,14 @@ try
     }
 
     size_t output[4];
+    size_t &RAX = output[0];
+    size_t &RBX = output[1];
+    size_t &RCX = output[2];
+    size_t &RDX = output[3];
 
     execute_cpuid(RAX_value, RCX_value, output);
 
-    std::cout << std::hex << output[0] << ";" << output[1] << ";" << output[2] << ";" << output[3] << std::endl;
+    std::cout << std::hex << RAX << ";" << RBX << ";" << RCX << ";" << RDX << std::endl;
 
     return EXIT_SUCCESS;
 }
