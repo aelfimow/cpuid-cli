@@ -1,6 +1,8 @@
 #include <iostream>
 #include <sstream>
 
+#include "Parser_0_0.h"
+
 static_assert(sizeof(size_t) == 8, "size_t expected to be 64 bit");
 
 extern "C" void execute_cpuid(size_t RAX_value, size_t RCX_value, size_t *pOut);
@@ -36,6 +38,19 @@ try
     execute_cpuid(RAX_value, RCX_value, output);
 
     std::cout << std::hex << RAX << ";" << RBX << ";" << RCX << ";" << RDX << std::endl;
+
+    std::list<std::string> parseResult;
+
+    if ((RAX_value == 0) && (RCX_value == 0))
+    {
+        Parser_0_0 p { RAX, RBX, RCX, RDX };
+        parseResult = p.get();
+    }
+
+    for (auto str: parseResult)
+    {
+        std::cout << str << std::endl;
+    }
 
     return EXIT_SUCCESS;
 }
