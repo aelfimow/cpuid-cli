@@ -9,7 +9,7 @@ Parser_0_0::Parser_0_0(size_t RAX, size_t RBX, size_t RCX, size_t RDX) :
 {
     auto toChar = [](size_t value, size_t pos) { return static_cast<char>(value >> (8 * pos)); };
 
-    const size_t charPos[] = { 3, 2, 1, 0 };
+    const size_t charPos[] = { 0, 1, 2, 3 };
 
     for (auto pos: charPos)
     {
@@ -18,12 +18,12 @@ Parser_0_0::Parser_0_0(size_t RAX, size_t RBX, size_t RCX, size_t RDX) :
 
     for (auto pos: charPos)
     {
-        vendorStr += toChar(RCX, pos);
+        vendorStr += toChar(RDX, pos);
     }
 
     for (auto pos: charPos)
     {
-        vendorStr += toChar(RDX, pos);
+        vendorStr += toChar(RCX, pos);
     }
 }
 
