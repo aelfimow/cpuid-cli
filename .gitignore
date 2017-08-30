@@ -1,3 +1,7 @@
 src/*.o
 src/cpuid-cli
 src/cpuid-cli.exe
+src/*.swp
+src/*~
+*.swp
+*~
