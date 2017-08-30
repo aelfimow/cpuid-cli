@@ -16,6 +16,7 @@ linux: compile cpuid_linux
 	g++ main.o cpuid_func_linux.o -o cpuid-cli ${CXXFLAGS} ${WARNINGS}
 
 compile:
+	g++ -c Parser_0_0.cpp -o Parser_0_0.o ${CXXFLAGS} ${WARNINGS}
 	g++ -c main.cpp -o main.o ${CXXFLAGS} ${WARNINGS}
 
 cpuid_windows:
