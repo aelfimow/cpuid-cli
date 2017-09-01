@@ -2,6 +2,7 @@
 #include <sstream>
 
 #include "Parser_0_0.h"
+#include "Parser_1_0.h"
 
 static_assert(sizeof(size_t) == 8, "size_t expected to be 64 bit");
 
@@ -44,6 +45,12 @@ try
     if ((RAX_value == 0) && (RCX_value == 0))
     {
         Parser_0_0 p { RAX, RBX, RCX, RDX };
+        parseResult = p.get();
+    }
+
+    if ((RAX_value == 1) && (RCX_value == 0))
+    {
+        Parser_1_0 p { RAX, RBX, RCX, RDX };
         parseResult = p.get();
     }
 
