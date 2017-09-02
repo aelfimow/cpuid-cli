@@ -29,7 +29,35 @@ void Parser_1_0::parseRAX(size_t value)
 
 void Parser_1_0::parseRBX(size_t value)
 {
-    value = value;
+    const uint8_t byte0 = static_cast<uint8_t>(value);
+    const uint8_t byte1 = static_cast<uint8_t>(value >> 8);
+    const uint8_t byte2 = static_cast<uint8_t>(value >> 16);
+    const uint8_t byte3 = static_cast<uint8_t>(value >> 24);
+
+    {
+        const size_t brandIndex = static_cast<size_t>(byte0);
+        std::stringstream ss;
+        ss << "Brand index: " << brandIndex;
+        result.push_back(ss.str());
+    }
+    {
+        const size_t lineSize = 8 * static_cast<size_t>(byte1);
+        std::stringstream ss;
+        ss << "CLFLUSH line size in bytes: " << lineSize;
+        result.push_back(ss.str());
+    }
+    {
+        const size_t idsNumber = static_cast<size_t>(byte2);
+        std::stringstream ss;
+        ss << "Maximum number of addressable IDs for logical processors: " << idsNumber;
+        result.push_back(ss.str());
+    }
+    {
+        const size_t apicID = static_cast<size_t>(byte3);
+        std::stringstream ss;
+        ss << "Initial APIC ID: " << apicID;
+        result.push_back(ss.str());
+    }
 }
 
 void Parser_1_0::parseRCX(size_t value)
