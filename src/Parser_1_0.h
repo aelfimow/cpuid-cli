@@ -22,6 +22,7 @@ class Parser_1_0
         void parseRDX(size_t value);
 
         std::map<size_t, std::string> featuresRCX() const;
+        std::map<size_t, std::string> featuresRDX() const;
 
     private:
         std::list<std::string> result;

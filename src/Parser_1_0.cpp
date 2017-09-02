@@ -51,7 +51,19 @@ void Parser_1_0::parseRCX(size_t value)
 
 void Parser_1_0::parseRDX(size_t value)
 {
-    value = value;
+    auto features { featuresRDX() };
+    std::bitset<32> featureBits { value };
+
+    for (auto feat: features)
+    {
+        auto bitpos { feat.first };
+        auto str { feat.second };
+
+        if (featureBits[bitpos])
+        {
+            result.push_back(str);
+        }
+    }
 }
 
 std::map<size_t, std::string> Parser_1_0::featuresRCX() const
@@ -89,6 +101,46 @@ std::map<size_t, std::string> Parser_1_0::featuresRCX() const
     featureStr[28] = "AVX";
     featureStr[29] = "F16C";
     featureStr[30] = "RDRAND";
+
+    return featureStr;
+}
+
+std::map<size_t, std::string> Parser_1_0::featuresRDX() const
+{
+    std::map<size_t, std::string> featureStr;
+
+    featureStr[0] = "x87 FPU on Chip";
+    featureStr[1] = "Virtual-8086 Mode Enhancement (VME)";
+    featureStr[2] = "Debugging Extensions (DE)";
+    featureStr[3] = "Page Size Extensions (PSE)";
+    featureStr[4] = "Time Stamp Counter (TSC)";
+    featureStr[5] = "RDMSR and WRMSR Support (MSR)";
+    featureStr[6] = "Physical Address Extensions (PAE)";
+    featureStr[7] = "Machine Check Exception (MCE)";
+    featureStr[8] = "CMPXCHG8B Instruction (CX8)";
+    featureStr[9] = "APIC on Chip (APIC)";
+
+    featureStr[11] = "SYSENTER and SYSEXIT (SEP)";
+    featureStr[12] = "Memory Type Range Registers (MTRR)";
+    featureStr[13] = "PTE Global Bit (PGE)";
+    featureStr[14] = "Machine Check Architecture (MCA)";
+    featureStr[15] = "Conditional Move/Compare Instruction (CMOV)";
+    featureStr[16] = "Page Attribute Table (PAT)";
+    featureStr[17] = "Page Size Extension (PSE-36)";
+    featureStr[18] = "Processor Serial Number (PSN)";
+    featureStr[19] = "CLFLUSH instruction (CLFSH)";
+
+    featureStr[21] = "Debug Store (DS)";
+    featureStr[22] = "Thermal Monitor and Clock Ctrl (ACPI)";
+    featureStr[23] = "MMX Technology";
+    featureStr[24] = "FXSAVE/FXRSTOR (FXSR)";
+    featureStr[25] = "SSE Extensions";
+    featureStr[26] = "SSE2 Extensions";
+    featureStr[27] = "Self Snoop (SS)";
+    featureStr[28] = "Multi-threading (HTT)";
+    featureStr[29] = "Thermal Monitor (TM)";
+
+    featureStr[31] = "Pend. Brk. EN. (PBE)";
 
     return featureStr;
 }
