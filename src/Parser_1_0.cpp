@@ -24,7 +24,64 @@ std::list<std::string> Parser_1_0::get() const
 
 void Parser_1_0::parseRAX(size_t value)
 {
-    value = value;
+    const size_t mask2bit = 0x0003;
+    const size_t mask4bit = 0x000F;
+    const size_t mask8bit = 0x00FF;
+
+    const size_t steppingID = value & mask4bit;
+    const size_t modelID = (value >> 4) & mask4bit;
+    const size_t familyID = (value >> 8) & mask4bit;
+    const size_t procType = (value >> 12) & mask2bit;
+    const size_t extendedModelID = (value >> 16) & mask4bit;
+    const size_t extendedFamilyID = (value >> 20) & mask8bit;
+
+    {
+        std::stringstream ss;
+        ss << std::hex << steppingID;
+        std::string str { "Stepping ID: " };
+        str += ss.str();
+        result.push_back(str);
+    }
+    {
+        std::map<size_t, std::string> typeField;
+        typeField[0] = "Original OEM Processor";
+        typeField[1] = "Intel OverDrive(R) Processor";
+        typeField[2] = "Dual processor";
+        typeField[3] = "reserved";
+        std::string str { "Processor Type: " };
+        str += typeField[procType];
+        result.push_back(str);
+    }
+    {
+        std::string str { "Family ID: " };
+        std::stringstream ss;
+        if (familyID != 15)
+        {
+            ss << std::hex << familyID;
+        }
+        else
+        {
+            size_t sum = extendedFamilyID + familyID;
+            ss << std::hex << sum;
+        }
+        str += ss.str();
+        result.push_back(str);
+    }
+    {
+        std::string str { "Model ID: " };
+        std::stringstream ss;
+        if ((familyID == 6) || (familyID == 15))
+        {
+            size_t sum = (extendedModelID << 4) + modelID;
+            ss << std::hex << sum;
+        }
+        else
+        {
+            ss << std::hex << modelID;
+        }
+        str += ss.str();
+        result.push_back(str);
+    }
 }
 
 void Parser_1_0::parseRBX(size_t value)
