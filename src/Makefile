@@ -8,6 +8,7 @@ WARNINGS += -std=c++17
 
 PARSER_OBJ  = Parser_0_0.o
 PARSER_OBJ += Parser_1_0.o
+PARSER_OBJ += Parser_2_0.o
 
 all:
 	@echo Specify: windows or linux
@@ -19,6 +20,7 @@ linux: compile cpuid_linux
 	g++ main.o cpuid_func_linux.o ${PARSER_OBJ} -o cpuid-cli ${CXXFLAGS} ${WARNINGS}
 
 compile:
+	g++ -c Parser_2_0.cpp -o Parser_2_0.o ${CXXFLAGS} ${WARNINGS}
 	g++ -c Parser_1_0.cpp -o Parser_1_0.o ${CXXFLAGS} ${WARNINGS}
 	g++ -c Parser_0_0.cpp -o Parser_0_0.o ${CXXFLAGS} ${WARNINGS}
 	g++ -c main.cpp -o main.o ${CXXFLAGS} ${WARNINGS}
