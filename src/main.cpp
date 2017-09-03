@@ -43,19 +43,19 @@ try
 
     std::list<std::string> parseResult;
 
-    if ((RAX_value == 0) && (RCX_value == 0))
+    if (RAX_value == 0)
     {
         Parser_0_0 p { RAX, RBX, RCX, RDX };
         parseResult = p.get();
     }
 
-    if ((RAX_value == 1) && (RCX_value == 0))
+    if (RAX_value == 1)
     {
         Parser_1_0 p { RAX, RBX, RCX, RDX };
         parseResult = p.get();
     }
 
-    if ((RAX_value == 2) && (RCX_value == 0))
+    if (RAX_value == 2)
     {
         Parser_2_0 p { RAX, RBX, RCX, RDX };
         parseResult = p.get();
