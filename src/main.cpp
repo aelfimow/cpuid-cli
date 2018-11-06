@@ -1,6 +1,7 @@
 #include <iostream>
 #include <sstream>
 
+#include "IParser.h"
 #include "Parser_0_0.h"
 #include "Parser_1_0.h"
 #include "Parser_2_0.h"
@@ -46,19 +47,19 @@ try
     if (RAX_value == 0)
     {
         Parser_0_0 p { RAX, RBX, RCX, RDX };
-        parseResult = p.get();
+        parseResult = p.parse();
     }
 
     if (RAX_value == 1)
     {
         Parser_1_0 p { RAX, RBX, RCX, RDX };
-        parseResult = p.get();
+        parseResult = p.parse();
     }
 
     if (RAX_value == 2)
     {
         Parser_2_0 p { RAX, RBX, RCX, RDX };
-        parseResult = p.get();
+        parseResult = p.parse();
     }
 
     for (auto str: parseResult)

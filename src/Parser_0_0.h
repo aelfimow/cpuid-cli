@@ -3,16 +3,13 @@
 #else
 #define PARSER_0_0_H
 
-#include <string>
-#include <list>
-
-class Parser_0_0
+class Parser_0_0 : public IParser
 {
     public:
         Parser_0_0(size_t RAX, size_t RBX, size_t RCX, size_t RDX);
         ~Parser_0_0();
 
-        std::list<std::string> get() const;
+        ParseResult_t parse() const override final;
 
     private:
         size_t maxInputValue;

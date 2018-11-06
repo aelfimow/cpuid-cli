@@ -1,9 +1,11 @@
 #include <sstream>
 
+#include "IParser.h"
 #include "Parser_0_0.h"
 
 
 Parser_0_0::Parser_0_0(size_t RAX, size_t RBX, size_t RCX, size_t RDX) :
+    IParser { },
     maxInputValue { RAX },
     vendorStr { }
 {
@@ -31,9 +33,9 @@ Parser_0_0::~Parser_0_0()
 {
 }
 
-std::list<std::string> Parser_0_0::get() const
+ParseResult_t Parser_0_0::parse() const
 {
-    std::list<std::string> result;
+    ParseResult_t result;
 
     std::stringstream ss;
     ss << "Maximum input value for basic CPUID: " << maxInputValue;

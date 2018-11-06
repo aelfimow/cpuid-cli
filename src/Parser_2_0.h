@@ -3,21 +3,19 @@
 #else
 #define PARSER_2_0_H
 
-#include <string>
-#include <list>
 #include <vector>
 #include <map>
 
-class Parser_2_0
+class Parser_2_0 : public IParser
 {
     public:
         Parser_2_0(size_t RAX, size_t RBX, size_t RCX, size_t RDX);
         ~Parser_2_0();
 
-        std::list<std::string> get() const;
+        ParseResult_t parse() const override final;
 
     private:
-        std::list<std::string> result;
+        ParseResult_t result;
 
     private:
         std::vector<uint8_t> split(size_t value) const;

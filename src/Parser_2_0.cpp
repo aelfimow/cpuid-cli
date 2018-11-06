@@ -1,10 +1,12 @@
 #include <bitset>
 
+#include "IParser.h"
 #include "Parser_2_0.h"
 
 
 Parser_2_0::Parser_2_0(size_t RAX, size_t RBX, size_t RCX, size_t RDX) :
-    result {}
+    IParser { },
+    result { }
 {
     size_t regs[] { (RAX & 0xFFFFFF00), RBX, RCX, RDX };
 
@@ -26,7 +28,7 @@ Parser_2_0::~Parser_2_0()
 {
 }
 
-std::list<std::string> Parser_2_0::get() const
+ParseResult_t Parser_2_0::parse() const
 {
     return result;
 }

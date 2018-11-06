@@ -3,17 +3,15 @@
 #else
 #define PARSER_1_0_H
 
-#include <string>
-#include <list>
 #include <map>
 
-class Parser_1_0
+class Parser_1_0 : public IParser
 {
     public:
         Parser_1_0(size_t RAX, size_t RBX, size_t RCX, size_t RDX);
         ~Parser_1_0();
 
-        std::list<std::string> get() const;
+        ParseResult_t parse() const override final;
 
     private:
         void parseRAX(size_t value);
@@ -25,7 +23,7 @@ class Parser_1_0
         std::map<size_t, std::string> featuresRDX() const;
 
     private:
-        std::list<std::string> result;
+        ParseResult_t result;
 
     public:
         Parser_1_0() = delete;
