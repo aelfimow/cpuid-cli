@@ -1,5 +1,7 @@
 #include <iostream>
 #include <sstream>
+#include <memory>
+#include <functional>
 
 #include "IParser.h"
 #include "Parser_0_0.h"
@@ -42,29 +44,25 @@ try
 
     std::cout << std::hex << RAX << ";" << RBX << ";" << RCX << ";" << RDX << std::endl;
 
-    std::list<std::string> parseResult;
+    ParseResult_t parseResult;
 
-    if (RAX_value == 0)
+    std::map<size_t, std::function<IParser *(size_t, size_t, size_t, size_t)>> factory
     {
-        Parser_0_0 p { RAX, RBX, RCX, RDX };
-        parseResult = p.parse();
-    }
+        { 0, [](size_t RAX, size_t RBX, size_t RCX, size_t RDX) { return new Parser_0_0(RAX, RBX, RCX, RDX); } },
+        { 1, [](size_t RAX, size_t RBX, size_t RCX, size_t RDX) { return new Parser_1_0(RAX, RBX, RCX, RDX); } },
+        { 2, [](size_t RAX, size_t RBX, size_t RCX, size_t RDX) { return new Parser_2_0(RAX, RBX, RCX, RDX); } }
+    };
 
-    if (RAX_value == 1)
+    if (auto f = factory.find(RAX_value); f != factory.end())
     {
-        Parser_1_0 p { RAX, RBX, RCX, RDX };
-        parseResult = p.parse();
-    }
+        std::unique_ptr<IParser> parser(f->second(RAX, RBX, RCX, RDX));
 
-    if (RAX_value == 2)
-    {
-        Parser_2_0 p { RAX, RBX, RCX, RDX };
-        parseResult = p.parse();
-    }
+        auto result { parser->parse() };
 
-    for (auto str: parseResult)
-    {
-        std::cout << str << std::endl;
+        for (auto str: result)
+        {
+            std::cout << str << std::endl;
+        }
     }
 
     return EXIT_SUCCESS;
