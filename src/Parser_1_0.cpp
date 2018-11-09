@@ -157,79 +157,77 @@ void Parser_1_0::parseRDX(size_t value)
 
 std::map<size_t, std::string> Parser_1_0::featuresRCX() const
 {
-    std::map<size_t, std::string> featureStr;
+    std::map<size_t, std::string> const features
+    {
+        {  0, "SSE3 extensions" },
+        {  1, "Carryless multiplication (PCLMULQDQ)" },
+        {  2, "64-bit DS area (DTES64)" },
+        {  3, "MONITOR/MWAIT" },
+        {  4, "CPL Qualified Debug Store (DS-CPL)" },
+        {  5, "Virtual Machine Extensions (VMX)" },
+        {  6, "Safer Mode Extensions (SMX)" },
+        {  7, "Enhanced Intel SpeedStep(R) Technology" },
+        {  8, "Thermal Monitor 2 (TM2)" },
+        {  9, "SSSE3 Extensions" },
+        { 10, "L1 Context ID (CNXT-ID)" },
+        { 11, "SDBG" },
+        { 12, "Fused Multiply Add (FMA)" },
+        { 13, "CMPXCHG16B" },
+        { 14, "xTPR Update Control" },
+        { 15, "Perf/Debug Capability MSR (PDCM)" },
+        { 17, "Process-context Identifiers (PCID)" },
+        { 18, "Direct Cache Access (DCA)" },
+        { 19, "SSE4.1" },
+        { 20, "SSE4.2" },
+        { 21, "x2APIC" },
+        { 22, "MOVBE" },
+        { 23, "POPCNT" },
+        { 24, "TSC-Deadline" },
+        { 25, "AES" },
+        { 26, "XSAVE" },
+        { 27, "OSXSAVE" },
+        { 28, "AVX" },
+        { 29, "F16C" },
+        { 30, "RDRAND" }
+    };
 
-    featureStr[0] = "SSE3 extensions";
-    featureStr[1] = "Carryless multiplication (PCLMULQDQ)";
-    featureStr[2] = "64-bit DS area (DTES64)";
-    featureStr[3] = "MONITOR/MWAIT";
-    featureStr[4] = "CPL Qualified Debug Store (DS-CPL)";
-    featureStr[5] = "Virtual Machine Extensions (VMX)";
-    featureStr[6] = "Safer Mode Extensions (SMX)";
-    featureStr[7] = "Enhanced Intel SpeedStep(R) Technology";
-    featureStr[8] = "Thermal Monitor 2 (TM2)";
-    featureStr[9] = "SSSE3 Extensions";
-    featureStr[10] = "L1 Context ID (CNXT-ID)";
-    featureStr[11] = "SDBG";
-    featureStr[12] = "Fused Multiply Add (FMA)";
-    featureStr[13] = "CMPXCHG16B";
-    featureStr[14] = "xTPR Update Control";
-    featureStr[15] = "Perf/Debug Capability MSR (PDCM)";
-
-    featureStr[17] = "Process-context Identifiers (PCID)";
-    featureStr[18] = "Direct Cache Access (DCA)";
-    featureStr[19] = "SSE4.1";
-    featureStr[20] = "SSE4.2";
-    featureStr[21] = "x2APIC";
-    featureStr[22] = "MOVBE";
-    featureStr[23] = "POPCNT";
-    featureStr[24] = "TSC-Deadline";
-    featureStr[25] = "AES";
-    featureStr[26] = "XSAVE";
-    featureStr[27] = "OSXSAVE";
-    featureStr[28] = "AVX";
-    featureStr[29] = "F16C";
-    featureStr[30] = "RDRAND";
-
-    return featureStr;
+    return features;
 }
 
 std::map<size_t, std::string> Parser_1_0::featuresRDX() const
 {
-    std::map<size_t, std::string> featureStr;
+    std::map<size_t, std::string> const features
+    {
+        {  0, "x87 FPU on Chip" },
+        {  1, "Virtual-8086 Mode Enhancement (VME)" },
+        {  2, "Debugging Extensions (DE)" },
+        {  3, "Page Size Extensions (PSE)" },
+        {  4, "Time Stamp Counter (TSC)" },
+        {  5, "RDMSR and WRMSR Support (MSR)" },
+        {  6, "Physical Address Extensions (PAE)" },
+        {  7, "Machine Check Exception (MCE)" },
+        {  8, "CMPXCHG8B Instruction (CX8)" },
+        {  9, "APIC on Chip (APIC)" },
+        { 11, "SYSENTER and SYSEXIT (SEP)" },
+        { 12, "Memory Type Range Registers (MTRR)" },
+        { 13, "PTE Global Bit (PGE)" },
+        { 14, "Machine Check Architecture (MCA)" },
+        { 15, "Conditional Move/Compare Instruction (CMOV)" },
+        { 16, "Page Attribute Table (PAT)" },
+        { 17, "Page Size Extension (PSE-36)" },
+        { 18, "Processor Serial Number (PSN)" },
+        { 19, "CLFLUSH instruction (CLFSH)" },
+        { 21, "Debug Store (DS)" },
+        { 22, "Thermal Monitor and Clock Ctrl (ACPI)" },
+        { 23, "MMX Technology" },
+        { 24, "FXSAVE/FXRSTOR (FXSR)" },
+        { 25, "SSE Extensions" },
+        { 26, "SSE2 Extensions" },
+        { 27, "Self Snoop (SS)" },
+        { 28, "Multi-threading (HTT)" },
+        { 29, "Thermal Monitor (TM)" },
+        { 31, "Pend. Brk. EN. (PBE)" }
+    };
 
-    featureStr[0] = "x87 FPU on Chip";
-    featureStr[1] = "Virtual-8086 Mode Enhancement (VME)";
-    featureStr[2] = "Debugging Extensions (DE)";
-    featureStr[3] = "Page Size Extensions (PSE)";
-    featureStr[4] = "Time Stamp Counter (TSC)";
-    featureStr[5] = "RDMSR and WRMSR Support (MSR)";
-    featureStr[6] = "Physical Address Extensions (PAE)";
-    featureStr[7] = "Machine Check Exception (MCE)";
-    featureStr[8] = "CMPXCHG8B Instruction (CX8)";
-    featureStr[9] = "APIC on Chip (APIC)";
-
-    featureStr[11] = "SYSENTER and SYSEXIT (SEP)";
-    featureStr[12] = "Memory Type Range Registers (MTRR)";
-    featureStr[13] = "PTE Global Bit (PGE)";
-    featureStr[14] = "Machine Check Architecture (MCA)";
-    featureStr[15] = "Conditional Move/Compare Instruction (CMOV)";
-    featureStr[16] = "Page Attribute Table (PAT)";
-    featureStr[17] = "Page Size Extension (PSE-36)";
-    featureStr[18] = "Processor Serial Number (PSN)";
-    featureStr[19] = "CLFLUSH instruction (CLFSH)";
-
-    featureStr[21] = "Debug Store (DS)";
-    featureStr[22] = "Thermal Monitor and Clock Ctrl (ACPI)";
-    featureStr[23] = "MMX Technology";
-    featureStr[24] = "FXSAVE/FXRSTOR (FXSR)";
-    featureStr[25] = "SSE Extensions";
-    featureStr[26] = "SSE2 Extensions";
-    featureStr[27] = "Self Snoop (SS)";
-    featureStr[28] = "Multi-threading (HTT)";
-    featureStr[29] = "Thermal Monitor (TM)";
-
-    featureStr[31] = "Pend. Brk. EN. (PBE)";
-
-    return featureStr;
+    return features;
 }
