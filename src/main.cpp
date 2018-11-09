@@ -36,16 +36,19 @@ try
     size_t RCX_value = str2hex(argv[2]);
 
     size_t output[4];
+
+    execute_cpuid(RAX_value, RCX_value, output);
+
     size_t &RAX = output[0];
     size_t &RBX = output[1];
     size_t &RCX = output[2];
     size_t &RDX = output[3];
 
-    execute_cpuid(RAX_value, RCX_value, output);
+    cpuid_response const response(RAX, RBX, RCX, RDX);
 
-    std::cout << std::hex << RAX << ";" << RBX << ";" << RCX << ";" << RDX << std::endl;
+    std::cout << response.str() << std::endl;
 
-    std::map<size_t, std::function<IParser *(cpuid_response const &)>> factory
+    std::map<size_t, std::function<IParser *(cpuid_response const &)>> const factory
     {
         { 0, [](cpuid_response const &d) { return new Parser_0_0(d); } },
         { 1, [](cpuid_response const &d) { return new Parser_1_0(d); } },
@@ -54,8 +57,7 @@ try
 
     if (auto f = factory.find(RAX_value); f != factory.end())
     {
-        cpuid_response data(RAX, RBX, RCX, RDX);
-        std::unique_ptr<IParser> parser(f->second(data));
+        std::unique_ptr<IParser> parser(f->second(response));
 
         auto result { parser->parse() };
 

@@ -1,5 +1,8 @@
+#include <sstream>
 #include <cstdint>
+
 #include "cpuid_response.h"
+
 
 cpuid_response::cpuid_response(size_t RAX, size_t RBX, size_t RCX, size_t RDX) :
     m_RAX { RAX },
@@ -31,4 +34,11 @@ size_t cpuid_response::RCX() const
 size_t cpuid_response::RDX() const
 {
     return m_RDX;
+}
+
+std::string cpuid_response::str() const
+{
+    std::stringstream ss;
+    ss << std::hex << m_RAX << ";" << m_RBX << ";" << m_RCX << ";" << m_RDX;
+    return ss.str();
 }

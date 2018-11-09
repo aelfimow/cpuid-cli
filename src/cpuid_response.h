@@ -14,6 +14,8 @@ class cpuid_response
         size_t RCX() const;
         size_t RDX() const;
 
+        std::string str() const;
+
     private:
         size_t const m_RAX;
         size_t const m_RBX;
