@@ -20,6 +20,7 @@ linux: compile cpuid_linux
 	g++ main.o cpuid_func_linux.o ${PARSER_OBJ} -o cpuid-cli ${CXXFLAGS} ${WARNINGS}
 
 compile:
+	g++ -c cpuid_response.cpp -o cpuid_response.o ${CXXFLAGS} ${WARNINGS}
 	g++ -c Parser_2_0.cpp -o Parser_2_0.o ${CXXFLAGS} ${WARNINGS}
 	g++ -c Parser_1_0.cpp -o Parser_1_0.o ${CXXFLAGS} ${WARNINGS}
 	g++ -c Parser_0_0.cpp -o Parser_0_0.o ${CXXFLAGS} ${WARNINGS}
