@@ -23,19 +23,17 @@ try
         throw std::invalid_argument("Usage: cpuid-cli RAX RCX. (hex-values expected)");
     }
 
-    size_t RAX_value = 0;
+    auto str2hex = [](char const *str)
     {
+        size_t value = 0;
         std::stringstream ss;
-        ss << std::hex << argv[1];
-        ss >> RAX_value;
-    }
+        ss << std::hex << str;
+        ss >> value;
+        return value;
+    };
 
-    size_t RCX_value = 0;
-    {
-        std::stringstream ss;
-        ss << std::hex << argv[2];
-        ss >> RCX_value;
-    }
+    size_t RAX_value = str2hex(argv[1]);
+    size_t RCX_value = str2hex(argv[2]);
 
     size_t output[4];
     size_t &RAX = output[0];
