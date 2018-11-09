@@ -2,11 +2,12 @@
 
 #include "IParser.h"
 #include "Parser_0_0.h"
+#include "cpuid_response.h"
 
 
-Parser_0_0::Parser_0_0(size_t RAX, size_t RBX, size_t RCX, size_t RDX) :
+Parser_0_0::Parser_0_0(cpuid_response const &data) :
     IParser { },
-    maxInputValue { RAX },
+    maxInputValue { data.RAX() },
     vendorStr { }
 {
     auto toChar = [](size_t value, size_t pos) { return static_cast<char>(value >> (8 * pos)); };
@@ -15,17 +16,17 @@ Parser_0_0::Parser_0_0(size_t RAX, size_t RBX, size_t RCX, size_t RDX) :
 
     for (auto pos: charPos)
     {
-        vendorStr += toChar(RBX, pos);
+        vendorStr += toChar(data.RBX(), pos);
     }
 
     for (auto pos: charPos)
     {
-        vendorStr += toChar(RDX, pos);
+        vendorStr += toChar(data.RDX(), pos);
     }
 
     for (auto pos: charPos)
     {
-        vendorStr += toChar(RCX, pos);
+        vendorStr += toChar(data.RCX(), pos);
     }
 }
 

@@ -1,14 +1,17 @@
 #include <bitset>
+#include <map>
+#include <vector>
 
 #include "IParser.h"
 #include "Parser_2_0.h"
+#include "cpuid_response.h"
 
 
-Parser_2_0::Parser_2_0(size_t RAX, size_t RBX, size_t RCX, size_t RDX) :
+Parser_2_0::Parser_2_0(cpuid_response const &data) :
     IParser { },
     result { }
 {
-    size_t regs[] { (RAX & 0xFFFFFF00), RBX, RCX, RDX };
+    size_t regs[] { (data.RAX() & 0xFFFFFF00), data.RBX(), data.RCX(), data.RDX() };
 
     for (auto r: regs)
     {

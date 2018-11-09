@@ -1,12 +1,15 @@
 #include <iostream>
 #include <sstream>
+#include <map>
 #include <memory>
+#include <vector>
 #include <functional>
 
 #include "IParser.h"
 #include "Parser_0_0.h"
 #include "Parser_1_0.h"
 #include "Parser_2_0.h"
+#include "cpuid_response.h"
 
 static_assert(sizeof(size_t) == 8, "size_t expected to be 64 bit");
 
@@ -44,16 +47,17 @@ try
 
     std::cout << std::hex << RAX << ";" << RBX << ";" << RCX << ";" << RDX << std::endl;
 
-    std::map<size_t, std::function<IParser *(size_t, size_t, size_t, size_t)>> factory
+    std::map<size_t, std::function<IParser *(cpuid_response const &)>> factory
     {
-        { 0, [](size_t RAX, size_t RBX, size_t RCX, size_t RDX) { return new Parser_0_0(RAX, RBX, RCX, RDX); } },
-        { 1, [](size_t RAX, size_t RBX, size_t RCX, size_t RDX) { return new Parser_1_0(RAX, RBX, RCX, RDX); } },
-        { 2, [](size_t RAX, size_t RBX, size_t RCX, size_t RDX) { return new Parser_2_0(RAX, RBX, RCX, RDX); } }
+        { 0, [](cpuid_response const &d) { return new Parser_0_0(d); } },
+        { 1, [](cpuid_response const &d) { return new Parser_1_0(d); } },
+        { 2, [](cpuid_response const &d) { return new Parser_2_0(d); } }
     };
 
     if (auto f = factory.find(RAX_value); f != factory.end())
     {
-        std::unique_ptr<IParser> parser(f->second(RAX, RBX, RCX, RDX));
+        cpuid_response data(RAX, RBX, RCX, RDX);
+        std::unique_ptr<IParser> parser(f->second(data));
 
         auto result { parser->parse() };
 

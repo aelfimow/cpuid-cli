@@ -1,18 +1,20 @@
 #include <sstream>
 #include <bitset>
+#include <map>
 
 #include "IParser.h"
 #include "Parser_1_0.h"
+#include "cpuid_response.h"
 
 
-Parser_1_0::Parser_1_0(size_t RAX, size_t RBX, size_t RCX, size_t RDX) :
+Parser_1_0::Parser_1_0(cpuid_response const &data) :
     IParser { },
     result { }
 {
-    parseRAX(RAX);
-    parseRBX(RBX);
-    parseRCX(RCX);
-    parseRDX(RDX);
+    parseRAX(data.RAX());
+    parseRBX(data.RBX());
+    parseRCX(data.RCX());
+    parseRDX(data.RDX());
 }
 
 Parser_1_0::~Parser_1_0()

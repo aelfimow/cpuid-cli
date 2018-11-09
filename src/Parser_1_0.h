@@ -3,12 +3,12 @@
 #else
 #define PARSER_1_0_H
 
-#include <map>
+class cpuid_response;
 
 class Parser_1_0 : public IParser
 {
     public:
-        Parser_1_0(size_t RAX, size_t RBX, size_t RCX, size_t RDX);
+        explicit Parser_1_0(cpuid_response const &data);
         ~Parser_1_0();
 
         parse_result_t parse() const override final;
