@@ -18,7 +18,7 @@ extern "C" void execute_cpuid(size_t RAX_value, size_t RCX_value, size_t *pOut);
 int main(int argc, char *argv[])
 try
 {
-    if (argc != 3)
+    if (argc < 2)
     {
         throw std::invalid_argument("Usage: cpuid-cli RAX RCX. (hex-values expected)");
     }
@@ -32,10 +32,10 @@ try
         return value;
     };
 
-    size_t RAX_value = str2hex(argv[1]);
-    size_t RCX_value = str2hex(argv[2]);
+    size_t RAX_value = str2hex(argc >= 2 ? argv[1] : "0");
+    size_t RCX_value = str2hex(argc >= 3 ? argv[2] : "0");
 
-    size_t output[4];
+    size_t output[4] = { 0, 0, 0, 0 };
 
     execute_cpuid(RAX_value, RCX_value, output);
 
@@ -46,6 +46,7 @@ try
 
     cpuid_response const response(RAX, RBX, RCX, RDX);
 
+    std::cout << "{ " << std::hex << RAX_value << ", " << RCX_value << " }" << std::endl;
     std::cout << response.str() << std::endl;
 
     std::map<size_t, std::function<IParser *(cpuid_response const &)>> const factory
