@@ -33,9 +33,9 @@ Parser_0_0::~Parser_0_0()
 {
 }
 
-ParseResult_t Parser_0_0::parse() const
+parse_result_t Parser_0_0::parse() const
 {
-    ParseResult_t result;
+    parse_result_t result;
 
     std::stringstream ss;
     ss << "Maximum input value for basic CPUID: " << maxInputValue;

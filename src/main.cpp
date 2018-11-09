@@ -44,8 +44,6 @@ try
 
     std::cout << std::hex << RAX << ";" << RBX << ";" << RCX << ";" << RDX << std::endl;
 
-    ParseResult_t parseResult;
-
     std::map<size_t, std::function<IParser *(size_t, size_t, size_t, size_t)>> factory
     {
         { 0, [](size_t RAX, size_t RBX, size_t RCX, size_t RDX) { return new Parser_0_0(RAX, RBX, RCX, RDX); } },

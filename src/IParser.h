@@ -6,7 +6,7 @@
 #include <string>
 #include <list>
 
-using ParseResult_t = std::list<std::string>;
+using parse_result_t = std::list<std::string>;
 
 class IParser
 {
@@ -19,7 +19,7 @@ class IParser
         {
         }
 
-        virtual ParseResult_t parse() const = 0;
+        virtual parse_result_t parse() const = 0;
 };
 
 #endif

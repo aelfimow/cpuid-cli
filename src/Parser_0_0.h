@@ -9,7 +9,7 @@ class Parser_0_0 : public IParser
         Parser_0_0(size_t RAX, size_t RBX, size_t RCX, size_t RDX);
         ~Parser_0_0();
 
-        ParseResult_t parse() const override final;
+        parse_result_t parse() const override final;
 
     private:
         size_t maxInputValue;

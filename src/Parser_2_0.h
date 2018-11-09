@@ -12,10 +12,10 @@ class Parser_2_0 : public IParser
         Parser_2_0(size_t RAX, size_t RBX, size_t RCX, size_t RDX);
         ~Parser_2_0();
 
-        ParseResult_t parse() const override final;
+        parse_result_t parse() const override final;
 
     private:
-        ParseResult_t result;
+        parse_result_t result;
 
     private:
         std::vector<uint8_t> split(size_t value) const;

@@ -11,7 +11,7 @@ class Parser_1_0 : public IParser
         Parser_1_0(size_t RAX, size_t RBX, size_t RCX, size_t RDX);
         ~Parser_1_0();
 
-        ParseResult_t parse() const override final;
+        parse_result_t parse() const override final;
 
     private:
         void parseRAX(size_t value);
@@ -23,7 +23,7 @@ class Parser_1_0 : public IParser
         std::map<size_t, std::string> featuresRDX() const;
 
     private:
-        ParseResult_t result;
+        parse_result_t result;
 
     public:
         Parser_1_0() = delete;
