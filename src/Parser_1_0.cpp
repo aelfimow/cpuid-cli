@@ -5,6 +5,7 @@
 #include "IParser.h"
 #include "Parser_1_0.h"
 #include "cpuid_response.h"
+#include "bit_extractor.h"
 
 
 Parser_1_0::Parser_1_0(cpuid_response const &data) :
@@ -28,16 +29,14 @@ parse_result_t Parser_1_0::parse() const
 
 void Parser_1_0::parseRAX(size_t value)
 {
-    const size_t mask2bit = 0x0003;
-    const size_t mask4bit = 0x000F;
-    const size_t mask8bit = 0x00FF;
+    bit_extractor bits { value };
 
-    const size_t steppingID = value & mask4bit;
-    const size_t modelID = (value >> 4) & mask4bit;
-    const size_t familyID = (value >> 8) & mask4bit;
-    const size_t procType = (value >> 12) & mask2bit;
-    const size_t extendedModelID = (value >> 16) & mask4bit;
-    const size_t extendedFamilyID = (value >> 20) & mask8bit;
+    size_t const steppingID = bits.extract(3, 0);
+    const size_t modelID = bits.extract(7, 4);
+    const size_t familyID = bits.extract(11, 8);
+    const size_t procType = bits.extract(13, 12);
+    const size_t extendedModelID = bits.extract(19, 16);
+    const size_t extendedFamilyID = bits.extract(27, 20);
 
     {
         std::stringstream ss;
@@ -90,35 +89,27 @@ void Parser_1_0::parseRAX(size_t value)
 
 void Parser_1_0::parseRBX(size_t value)
 {
-    const uint8_t byte0 = static_cast<uint8_t>(value);
-    const uint8_t byte1 = static_cast<uint8_t>(value >> 8);
-    const uint8_t byte2 = static_cast<uint8_t>(value >> 16);
-    const uint8_t byte3 = static_cast<uint8_t>(value >> 24);
+    bit_extractor bits { value };
+    size_t const brandIndex = bits.extract(7, 0);
+    size_t const lineSize = 8 * bits.extract(15, 8);
+    size_t const idsNumber = bits.extract(23, 16);
+    size_t const apicID = bits.extract(31, 24);
 
-    {
-        const size_t brandIndex = static_cast<size_t>(byte0);
-        std::stringstream ss;
-        ss << "Brand index: " << brandIndex;
-        result.push_back(ss.str());
-    }
-    {
-        const size_t lineSize = 8 * static_cast<size_t>(byte1);
-        std::stringstream ss;
-        ss << "CLFLUSH line size in bytes: " << lineSize;
-        result.push_back(ss.str());
-    }
-    {
-        const size_t idsNumber = static_cast<size_t>(byte2);
-        std::stringstream ss;
-        ss << "Maximum number of addressable IDs for logical processors: " << idsNumber;
-        result.push_back(ss.str());
-    }
-    {
-        const size_t apicID = static_cast<size_t>(byte3);
-        std::stringstream ss;
-        ss << "Initial APIC ID: " << apicID;
-        result.push_back(ss.str());
-    }
+    std::stringstream ss1;
+    ss1 << "Brand index: " << brandIndex;
+    result.push_back(ss1.str());
+
+    std::stringstream ss2;
+    ss2 << "CLFLUSH line size in bytes: " << lineSize;
+    result.push_back(ss2.str());
+
+    std::stringstream ss3;
+    ss3 << "Maximum number of addressable IDs for logical processors: " << idsNumber;
+    result.push_back(ss3.str());
+
+    std::stringstream ss4;
+    ss4 << "Initial APIC ID: " << apicID;
+    result.push_back(ss4.str());
 }
 
 void Parser_1_0::parseRCX(size_t value)
