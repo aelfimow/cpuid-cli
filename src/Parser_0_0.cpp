@@ -3,6 +3,7 @@
 #include "IParser.h"
 #include "Parser_0_0.h"
 #include "cpuid_response.h"
+#include "bit_extractor.h"
 
 
 Parser_0_0::Parser_0_0(cpuid_response const &data) :
@@ -10,23 +11,18 @@ Parser_0_0::Parser_0_0(cpuid_response const &data) :
     maxInputValue { data.RAX() },
     vendorStr { }
 {
-    auto toChar = [](size_t value, size_t pos) { return static_cast<char>(value >> (8 * pos)); };
+    auto toChar = [](size_t value) { return static_cast<char>(value); };
 
-    const size_t charPos[] = { 0, 1, 2, 3 };
+    size_t const regs[3] { data.RBX(), data.RDX(), data.RCX() };
 
-    for (auto pos: charPos)
+    for (auto r: regs)
     {
-        vendorStr += toChar(data.RBX(), pos);
-    }
+        bit_extractor bits { r };
 
-    for (auto pos: charPos)
-    {
-        vendorStr += toChar(data.RDX(), pos);
-    }
-
-    for (auto pos: charPos)
-    {
-        vendorStr += toChar(data.RCX(), pos);
+        vendorStr += toChar(bits.extract(7, 0));
+        vendorStr += toChar(bits.extract(15, 8));
+        vendorStr += toChar(bits.extract(23, 16));
+        vendorStr += toChar(bits.extract(31, 24));
     }
 }
 
