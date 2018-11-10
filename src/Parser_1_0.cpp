@@ -46,11 +46,13 @@ void Parser_1_0::parseRAX(size_t value)
         result.push_back(str);
     }
     {
-        std::map<size_t, std::string> typeField;
-        typeField[0] = "Original OEM Processor";
-        typeField[1] = "Intel OverDrive(R) Processor";
-        typeField[2] = "Dual processor";
-        typeField[3] = "reserved";
+        std::map<size_t, std::string> typeField
+        {
+            { 0, "Original OEM Processor" },
+            { 1, "Intel OverDrive(R) Processor" },
+            { 2, "Dual processor" },
+            { 3, "reserved" }
+        };
         std::string str { "Processor Type: " };
         str += typeField[procType];
         result.push_back(str);
