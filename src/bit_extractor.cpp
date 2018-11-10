@@ -18,13 +18,12 @@ size_t bit_extractor::extract(size_t from, size_t to) const
     std::bitset<64> result { 0 };
     std::bitset<64> value { m_value };
 
-    size_t pos = 0;
-
     if (from < to)
     {
         std::swap(from, to);
     }
 
+    size_t pos = 0;
     size_t const end_pos = from - to + 1;
     size_t const offset = to;
 
