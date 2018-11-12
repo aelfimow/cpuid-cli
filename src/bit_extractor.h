@@ -9,6 +9,8 @@ class bit_extractor
         explicit bit_extractor(size_t value);
         ~bit_extractor();
 
+        bool extract(size_t pos) const;
+
         size_t extract(size_t from, size_t to) const;
 
     private:

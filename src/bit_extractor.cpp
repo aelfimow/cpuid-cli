@@ -13,6 +13,13 @@ bit_extractor::~bit_extractor()
 {
 }
 
+bool bit_extractor::extract(size_t pos) const
+{
+    std::bitset<64> value { m_value };
+
+    return value[pos];
+}
+
 size_t bit_extractor::extract(size_t from, size_t to) const
 {
     std::bitset<64> result { 0 };
