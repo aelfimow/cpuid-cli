@@ -11,10 +11,9 @@
 #include "Parser_2_0.h"
 #include "Parser_3_0.h"
 #include "cpuid_response.h"
+#include "cpuid_func.h"
 
 static_assert(sizeof(size_t) == 8, "size_t expected to be 64 bit");
-
-extern "C" void execute_cpuid(size_t RAX_value, size_t RCX_value, size_t *pOut);
 
 int main(int argc, char *argv[])
 try
@@ -38,7 +37,7 @@ try
 
     size_t output[4] = { 0, 0, 0, 0 };
 
-    execute_cpuid(RAX_value, RCX_value, output);
+    ::execute_cpuid(RAX_value, RCX_value, output);
 
     size_t &RAX = output[0];
     size_t &RBX = output[1];
