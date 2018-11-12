@@ -15,6 +15,12 @@ class Parser_4_0 : public IParser
 
     private:
         parse_result_t result;
+        bool moreCaches;
+
+        void parseRAX(size_t value);
+        void parseRBX(size_t value);
+        void parseRCX(size_t value);
+        void parseRDX(size_t value);
 
     public:
         Parser_4_0() = delete;
