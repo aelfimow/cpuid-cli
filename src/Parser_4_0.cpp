@@ -1,10 +1,11 @@
-#include <sstream>
+#include <string>
 #include <map>
 
 #include "IParser.h"
 #include "Parser_4_0.h"
 #include "bit_extractor.h"
 #include "cpuid_response.h"
+#include "ParserString.h"
 
 
 Parser_4_0::Parser_4_0(cpuid_response const &data) :
@@ -63,11 +64,8 @@ void Parser_4_0::parseRAX(size_t value)
     }
 
     {
-        size_t const val = extr.extract(7, 5);
-
-        std::stringstream ss;
-        ss << "Cache level: " << val;
-        result.push_back(ss.str());
+        ParserString pstr { "Cache level: ", extr.extract(7, 5) };
+        result.push_back(pstr.str());
     }
 
     result.push_back(extr.extract(8) ? "Self initializing" : "Not self initializing");
@@ -75,18 +73,21 @@ void Parser_4_0::parseRAX(size_t value)
     result.push_back(extr.extract(9) ? "Fully associative" : "Not fully associative");
 
     {
-        size_t const val = extr.extract(25, 14);
-        std::stringstream ss;
-        ss << "Max. number of addressible IDs for logical processors sharing this cache: ";
-        ss << (val + 1);
-        result.push_back(ss.str());
+        ParserString pstr
+        {
+            "Max. number of addressible IDs for logical processors sharing this cache: ",
+            1 + extr.extract(25, 14)
+        };
+        result.push_back(pstr.str());
     }
+
     {
-        size_t const val = extr.extract(31, 26);
-        std::stringstream ss;
-        ss << "Max. number of addressible IDs for processor cores in the physical package: ";
-        ss << (val + 1);
-        result.push_back(ss.str());
+        ParserString pstr
+        {
+            "Max. number of addressible IDs for processor cores in the physical package: ",
+            1 + extr.extract(31, 26)
+        };
+        result.push_back(pstr.str());
     }
 }
 
@@ -95,34 +96,25 @@ void Parser_4_0::parseRBX(size_t value)
     bit_extractor extr { value };
 
     {
-        size_t const val = extr.extract(11, 0);
-        std::stringstream ss;
-        ss << "System coherency line size: ";
-        ss << (val + 1);
-        result.push_back(ss.str());
+        ParserString pstr { "System coherency line size: ", 1 + extr.extract(11, 0) };
+        result.push_back(pstr.str());
     }
+
     {
-        size_t const val = extr.extract(21, 12);
-        std::stringstream ss;
-        ss << "Physical line partitions: ";
-        ss << (val + 1);
-        result.push_back(ss.str());
+        ParserString pstr { "Physical line partitions: ", 1 + extr.extract(21, 12) };
+        result.push_back(pstr.str());
     }
+
     {
-        size_t const val = extr.extract(31, 22);
-        std::stringstream ss;
-        ss << "Ways of associativity: ";
-        ss << (val + 1);
-        result.push_back(ss.str());
+        ParserString pstr { "Ways of associativity: ", 1 + extr.extract(31, 22) };
+        result.push_back(pstr.str());
     }
 }
 
 void Parser_4_0::parseRCX(size_t value)
 {
-    std::stringstream ss;
-    ss << "Number of sets: ";
-    ss << (value + 1);
-    result.push_back(ss.str());
+    ParserString pstr { "Number of sets: ", (value + 1) };
+    result.push_back(pstr.str());
 }
 
 void Parser_4_0::parseRDX(size_t value)
