@@ -9,12 +9,17 @@
 
 
 Parser_7_0::Parser_7_0(cpuid_response const &data) :
-    result { }
+    result { },
+    infoAvail { false }
 {
     parseRAX(data.RAX());
-    parseRBX(data.RBX());
-    parseRCX(data.RCX());
-    parseRDX(data.RDX());
+
+    if (infoAvail)
+    {
+        parseRBX(data.RBX());
+        parseRCX(data.RCX());
+        parseRDX(data.RDX());
+    }
 }
 
 Parser_7_0::~Parser_7_0()
@@ -30,6 +35,8 @@ void Parser_7_0::parseRAX(size_t value)
 {
     ParserString pstr { "Maximum input value for supported sub-leaves: ", value };
     result.push_back(pstr.str());
+
+    infoAvail = (value != 0);
 }
 
 void Parser_7_0::parseRBX(size_t value)
