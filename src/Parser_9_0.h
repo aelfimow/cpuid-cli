@@ -8,7 +8,7 @@ class cpuid_response;
 class Parser_9_0 : public IParser
 {
     public:
-        explicit PParser_9_0(cpuid_response const &data);
+        explicit Parser_9_0(cpuid_response const &data);
         ~Parser_9_0();
 
         parse_result_t parse() const override final;
