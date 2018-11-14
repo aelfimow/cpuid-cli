@@ -15,6 +15,7 @@
 #include "Parser_6_0.h"
 #include "Parser_7_0.h"
 #include "Parser_9_0.h"
+#include "Parser_A_0.h"
 #include "cpuid_response.h"
 #include "cpuid_func.h"
 
@@ -56,15 +57,16 @@ try
 
     std::map<size_t, std::function<IParser *(cpuid_response const &)>> const factory
     {
-        { 0, [](cpuid_response const &d) { return new Parser_0_0(d); } },
-        { 1, [](cpuid_response const &d) { return new Parser_1_0(d); } },
-        { 2, [](cpuid_response const &d) { return new Parser_2_0(d); } },
-        { 3, [](cpuid_response const &d) { return new Parser_3_0(d); } },
-        { 4, [](cpuid_response const &d) { return new Parser_4_0(d); } },
-        { 5, [](cpuid_response const &d) { return new Parser_5_0(d); } },
-        { 6, [](cpuid_response const &d) { return new Parser_6_0(d); } },
-        { 7, [](cpuid_response const &d) { return new Parser_7_0(d); } },
-        { 9, [](cpuid_response const &d) { return new Parser_9_0(d); } }
+        { 0x00, [](cpuid_response const &d) { return new Parser_0_0(d); } },
+        { 0x01, [](cpuid_response const &d) { return new Parser_1_0(d); } },
+        { 0x02, [](cpuid_response const &d) { return new Parser_2_0(d); } },
+        { 0x03, [](cpuid_response const &d) { return new Parser_3_0(d); } },
+        { 0x04, [](cpuid_response const &d) { return new Parser_4_0(d); } },
+        { 0x05, [](cpuid_response const &d) { return new Parser_5_0(d); } },
+        { 0x06, [](cpuid_response const &d) { return new Parser_6_0(d); } },
+        { 0x07, [](cpuid_response const &d) { return new Parser_7_0(d); } },
+        { 0x09, [](cpuid_response const &d) { return new Parser_9_0(d); } },
+        { 0x0A, [](cpuid_response const &d) { return new Parser_A_0(d); } }
     };
 
     if (auto f = factory.find(RAX_value); f != factory.end())
