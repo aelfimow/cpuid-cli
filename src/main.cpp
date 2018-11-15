@@ -16,6 +16,7 @@
 #include "Parser_7_0.h"
 #include "Parser_9_0.h"
 #include "Parser_A_0.h"
+#include "Parser_B_0.h"
 #include "cpuid_response.h"
 #include "cpuid_func.h"
 
@@ -66,7 +67,8 @@ try
         { 0x06, [](cpuid_response const &d) { return new Parser_6_0(d); } },
         { 0x07, [](cpuid_response const &d) { return new Parser_7_0(d); } },
         { 0x09, [](cpuid_response const &d) { return new Parser_9_0(d); } },
-        { 0x0A, [](cpuid_response const &d) { return new Parser_A_0(d); } }
+        { 0x0A, [](cpuid_response const &d) { return new Parser_A_0(d); } },
+        { 0x0B, [](cpuid_response const &d) { return new Parser_B_0(d); } }
     };
 
     if (auto f = factory.find(RAX_value); f != factory.end())
