@@ -33,10 +33,10 @@ void Parser_A_0::parseRAX(size_t value)
 
     std::map<std::string, std::pair<size_t, size_t>> const table
     {
-        { "Version ID of architectural performance monitoring: ", { 7, 0 } },
-        { "Number of general-purpose performance monitoring counter per logical processor: ", { 15, 8 } },
-        { "Bit width of general-purpose, performance monitoring counter: ", { 23, 16 } },
-        { "Length of EBX bit vector to enumerate architectural performance monitoring events: ", { 31, 24 } }
+        { "Version ID of architectural performance monitoring", { 7, 0 } },
+        { "Number of general-purpose performance monitoring counter per logical processor", { 15, 8 } },
+        { "Bit width of general-purpose, performance monitoring counter", { 23, 16 } },
+        { "Length of EBX bit vector to enumerate architectural performance monitoring events", { 31, 24 } }
     };
 
     for (auto &t: table)
@@ -84,7 +84,7 @@ void Parser_A_0::parseRDX(size_t value)
     {
         ParserString pstr
         {
-            "Number of fixed-function performance counters: ",
+            "Number of fixed-function performance counters",
             extr.extract(4, 0)
         };
 
@@ -94,7 +94,7 @@ void Parser_A_0::parseRDX(size_t value)
     {
         ParserString pstr
         {
-            "Bit width of fixed-function performance counters: ",
+            "Bit width of fixed-function performance counters",
             extr.extract(12, 5)
         };
 

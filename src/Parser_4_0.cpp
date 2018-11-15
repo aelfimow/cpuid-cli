@@ -64,7 +64,7 @@ void Parser_4_0::parseRAX(size_t value)
     }
 
     {
-        ParserString pstr { "Cache level: ", extr.extract(7, 5) };
+        ParserString pstr { "Cache level", extr.extract(7, 5) };
         result.push_back(pstr.str());
     }
 
@@ -75,7 +75,7 @@ void Parser_4_0::parseRAX(size_t value)
     {
         ParserString pstr
         {
-            "Max. number of addressible IDs for logical processors sharing this cache: ",
+            "Max. number of addressible IDs for logical processors sharing this cache",
             1 + extr.extract(25, 14)
         };
         result.push_back(pstr.str());
@@ -84,7 +84,7 @@ void Parser_4_0::parseRAX(size_t value)
     {
         ParserString pstr
         {
-            "Max. number of addressible IDs for processor cores in the physical package: ",
+            "Max. number of addressible IDs for processor cores in the physical package",
             1 + extr.extract(31, 26)
         };
         result.push_back(pstr.str());
@@ -96,24 +96,24 @@ void Parser_4_0::parseRBX(size_t value)
     bit_extractor extr { value };
 
     {
-        ParserString pstr { "System coherency line size: ", 1 + extr.extract(11, 0) };
+        ParserString pstr { "System coherency line size", 1 + extr.extract(11, 0) };
         result.push_back(pstr.str());
     }
 
     {
-        ParserString pstr { "Physical line partitions: ", 1 + extr.extract(21, 12) };
+        ParserString pstr { "Physical line partitions", 1 + extr.extract(21, 12) };
         result.push_back(pstr.str());
     }
 
     {
-        ParserString pstr { "Ways of associativity: ", 1 + extr.extract(31, 22) };
+        ParserString pstr { "Ways of associativity", 1 + extr.extract(31, 22) };
         result.push_back(pstr.str());
     }
 }
 
 void Parser_4_0::parseRCX(size_t value)
 {
-    ParserString pstr { "Number of sets: ", (value + 1) };
+    ParserString pstr { "Number of sets", (value + 1) };
     result.push_back(pstr.str());
 }
 

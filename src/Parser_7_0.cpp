@@ -33,7 +33,7 @@ parse_result_t Parser_7_0::parse() const
 
 void Parser_7_0::parseRAX(size_t value)
 {
-    ParserString pstr { "Maximum input value for supported sub-leaves: ", value };
+    ParserString pstr { "Maximum input value for supported sub-leaves", value };
     result.push_back(pstr.str());
 
     infoAvail = (value != 0);
@@ -103,7 +103,7 @@ void Parser_7_0::parseRCX(size_t value)
 
     ParserString pstr
     {
-        "The value of MAWAU used by the BNDLDX and BNDSTX instructions in 64-bit mode: ",
+        "The value of MAWAU used by the BNDLDX and BNDSTX instructions in 64-bit mode",
         extr.extract(21, 17)
     };
 

@@ -32,7 +32,7 @@ void Parser_9_0::parseRAX(size_t value)
 
     ParserString pstr
     {
-        "Value of bits [31:0] of IA32_PLATFORM_DCA_CAP MSR: ",
+        "Value of bits [31:0] of IA32_PLATFORM_DCA_CAP MSR",
         extr.extract(31, 0)
     };
 

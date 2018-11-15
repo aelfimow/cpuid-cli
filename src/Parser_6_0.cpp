@@ -61,7 +61,7 @@ void Parser_6_0::parseRBX(size_t value)
 
     ParserString pstr
     {
-        "Number of Interrupt Thresholds in Digital Thermal Sensor: ",
+        "Number of Interrupt Thresholds in Digital Thermal Sensor",
         extr.extract(3, 0)
     };
 

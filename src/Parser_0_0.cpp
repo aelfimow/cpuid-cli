@@ -4,6 +4,7 @@
 #include "Parser_0_0.h"
 #include "cpuid_response.h"
 #include "bit_extractor.h"
+#include "ParserString.h"
 
 
 Parser_0_0::Parser_0_0(cpuid_response const &data) :
@@ -34,10 +35,9 @@ parse_result_t Parser_0_0::parse() const
 {
     parse_result_t result;
 
-    std::stringstream ss;
-    ss << "Maximum input value for basic CPUID: " << maxInputValue;
+    ParserString pstr { "Maximum input value for basic CPUID", maxInputValue };
 
-    result.push_back(ss.str());
+    result.push_back(pstr.str());
     result.push_back(vendorStr);
 
     return result;
