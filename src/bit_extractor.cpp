@@ -42,3 +42,8 @@ size_t bit_extractor::extract(size_t from, size_t to) const
 
     return result.to_ullong();
 }
+
+size_t bit_extractor::extract(std::pair<size_t, size_t> const &range) const
+{
+    return extract(range.first, range.second);
+}
