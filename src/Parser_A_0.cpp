@@ -41,7 +41,7 @@ void Parser_A_0::parseRAX(size_t value)
 
     for (auto &t: table)
     {
-        ParserString pstr { t.first, extr.extract(t.second.first, t.second.second) };
+        ParserString pstr { t.first, extr.extract(t.second) };
 
         result.push_back(pstr.str());
     }

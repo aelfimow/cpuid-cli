@@ -74,7 +74,7 @@ void Parser_5_0::parseRDX(size_t value)
 
     for (auto &t: table)
     {
-        ParserString pstr { t.first, extr.extract(t.second.first, t.second.second) };
+        ParserString pstr { t.first, extr.extract(t.second) };
         result.push_back(pstr.str());
     }
 }
