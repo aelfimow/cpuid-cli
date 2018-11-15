@@ -15,7 +15,7 @@ class ParserString
         std::string m_str;
 
     public:
-        Parser_0_0() = delete;
+        ParserString() = delete;
 };
 
 #endif
