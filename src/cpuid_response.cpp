@@ -57,6 +57,9 @@ size_t cpuid_response::RDX() const
 std::string cpuid_response::str() const
 {
     std::stringstream ss;
+    ss << "{ " << std::hex << m_RAX_Command << ", " << m_RCX_Command << " }: ";
+    ss << "{ ";
     ss << std::hex << m_RAX << ";" << m_RBX << ";" << m_RCX << ";" << m_RDX;
+    ss << " }";
     return ss.str();
 }

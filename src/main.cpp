@@ -54,7 +54,6 @@ try
     cpuid_response response(RAX, RBX, RCX, RDX);
     response.command(RAX_value, RCX_value);
 
-    std::cout << "{ " << std::hex << RAX_value << ", " << RCX_value << " }" << std::endl;
     std::cout << response.str() << std::endl;
 
     std::map<size_t, std::function<IParser *(cpuid_response const &)>> const factory
