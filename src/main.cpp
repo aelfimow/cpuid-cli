@@ -39,8 +39,8 @@ try
         return value;
     };
 
-    size_t RAX_value = str2hex(argc >= 2 ? argv[1] : "0");
-    size_t RCX_value = str2hex(argc >= 3 ? argv[2] : "0");
+    size_t const RAX_value = argc >= 2 ? str2hex(argv[1]) : 0;
+    size_t const RCX_value = argc >= 3 ? str2hex(argv[2]) : 0;
 
     size_t output[4] = { 0, 0, 0, 0 };
 
@@ -51,7 +51,8 @@ try
     size_t &RCX = output[2];
     size_t &RDX = output[3];
 
-    cpuid_response const response(RAX, RBX, RCX, RDX);
+    cpuid_response response(RAX, RBX, RCX, RDX);
+    response.command(RAX_value, RCX_value);
 
     std::cout << "{ " << std::hex << RAX_value << ", " << RCX_value << " }" << std::endl;
     std::cout << response.str() << std::endl;
