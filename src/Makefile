@@ -1,10 +1,9 @@
-CXXFLAGS = -O3 -m64
-
-WARNINGS  = -Wall
-WARNINGS += -Wextra
-WARNINGS += -pedantic
-WARNINGS += -Weffc++
-WARNINGS += -std=c++17
+CXXFLAGS  = -O3 -m64
+CXXFLAGS += -Wall
+CXXFLAGS += -Wextra
+CXXFLAGS += -pedantic
+CXXFLAGS += -Weffc++
+CXXFLAGS += -std=c++17
 
 FILES = $(wildcard *.cpp)
 FILES_OBJ = $(FILES:.cpp=.o)
@@ -26,7 +25,7 @@ cpuid_windows:
 cpuid_linux:
 	as cpuid_func_linux.S -o cpuid_func.o --64
 
-info:
-	g++ -MM *.cpp
+deps:
+	g++ -MM *.cpp > Makefile.files
 
 include Makefile.files
