@@ -5,6 +5,8 @@
 
 
 cpuid_response::cpuid_response(size_t RAX, size_t RBX, size_t RCX, size_t RDX) :
+    m_RAX_Command { 0 },
+    m_RCX_Command { 0 },
     m_RAX { RAX },
     m_RBX { RBX },
     m_RCX { RCX },
@@ -14,6 +16,22 @@ cpuid_response::cpuid_response(size_t RAX, size_t RBX, size_t RCX, size_t RDX) :
 
 cpuid_response::~cpuid_response()
 {
+}
+
+void cpuid_response::command(size_t RAX, size_t RCX)
+{
+    m_RAX_Command = RAX;
+    m_RCX_Command = RCX;
+}
+
+size_t cpuid_response::RAX_Command() const
+{
+    return m_RAX_Command;
+}
+
+size_t cpuid_response::RCX_Command() const
+{
+    return m_RCX_Command;
 }
 
 size_t cpuid_response::RAX() const

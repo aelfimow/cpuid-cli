@@ -9,6 +9,11 @@ class cpuid_response
         explicit cpuid_response(size_t RAX, size_t RBX, size_t RCX, size_t RDX);
         ~cpuid_response();
 
+        void command(size_t RAX, size_t RCX);
+
+        size_t RAX_Command() const;
+        size_t RCX_Command() const;
+
         size_t RAX() const;
         size_t RBX() const;
         size_t RCX() const;
@@ -17,6 +22,9 @@ class cpuid_response
         std::string str() const;
 
     private:
+        size_t m_RAX_Command;
+        size_t m_RCX_Command;
+
         size_t const m_RAX;
         size_t const m_RBX;
         size_t const m_RCX;
