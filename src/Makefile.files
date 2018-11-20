@@ -2,7 +2,8 @@ bit_extractor.o: bit_extractor.cpp bit_extractor.h
 cpuid_response.o: cpuid_response.cpp cpuid_response.h
 main.o: main.cpp IParser.h Parser_0_0.h Parser_1_0.h Parser_2_0.h \
  Parser_3_0.h Parser_4_0.h Parser_5_0.h Parser_6_0.h Parser_7_0.h \
- Parser_9_0.h Parser_A_0.h Parser_B_0.h cpuid_response.h cpuid_func.h
+ Parser_9_0.h Parser_A_0.h Parser_B_0.h Parser_D_0.h cpuid_response.h \
+ cpuid_func.h
 Parser_0_0.o: Parser_0_0.cpp IParser.h Parser_0_0.h cpuid_response.h \
  bit_extractor.h ParserString.h
 Parser_1_0.o: Parser_1_0.cpp IParser.h Parser_1_0.h cpuid_response.h \
