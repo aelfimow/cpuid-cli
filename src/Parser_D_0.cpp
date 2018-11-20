@@ -1,5 +1,6 @@
 #include <string>
 #include <map>
+#include <bitset>
 
 #include "IParser.h"
 #include "Parser_D_0.h"
@@ -29,19 +30,60 @@ parse_result_t Parser_D_0::parse() const
 void Parser_D_0::parseRAX(size_t value)
 {
     bit_extractor extr { value };
+
+    std::map<std::pair<size_t, size_t>, std::string> const table
+    {
+        { { 0, 0 }, "x87 state" },
+        { { 1, 1 }, "SSE state" },
+        { { 2, 2 }, "AVX state" },
+        { { 4, 3 }, "MPX state" },
+        { { 7, 5 }, "AVX-512 state" },
+        { { 8, 8 }, "Used for IA32_XSS" },
+        { { 9, 9 }, "PKRU state" }
+    };
+
+    for (auto &t: table)
+    {
+        ParserString pstr { t.second, extr.extract(t.first) };
+        result.push_back(pstr.str());
+    }
 }
 
 void Parser_D_0::parseRBX(size_t value)
 {
     bit_extractor extr { value };
+
+    ParserString pstr
+    {
+        "Maximum size required by enabled features in XCR0",
+        extr.extract(31, 0)
+    };
+
+    result.push_back(pstr.str());
 }
 
 void Parser_D_0::parseRCX(size_t value)
 {
     bit_extractor extr { value };
+
+    ParserString pstr
+    {
+        "Maximum size of the XSAVE/XRSTOR save area required by all supported features",
+        extr.extract(31, 0)
+    };
+
+    result.push_back(pstr.str());
 }
 
 void Parser_D_0::parseRDX(size_t value)
 {
-    bit_extractor extr { value };
+    std::bitset<32> bin_value { value };
+
+    ParserString pstr
+    {
+        "Upper 32 bits of XCR0",
+        bin_value.to_string()
+    };
+
+    result.push_back(pstr.str());
 }
