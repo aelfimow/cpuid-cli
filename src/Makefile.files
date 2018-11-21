@@ -24,8 +24,8 @@ Parser_A_0.o: Parser_A_0.cpp IParser.h Parser_A_0.h bit_extractor.h \
  cpuid_response.h ParserString.h
 Parser_B_0.o: Parser_B_0.cpp IParser.h Parser_B_0.h bit_extractor.h \
  cpuid_response.h ParserString.h
-Parser_D_0.o: Parser_D_0.cpp IParser.h Parser_D_0.h bit_extractor.h \
- cpuid_response.h ParserString.h
+Parser_D_0.o: Parser_D_0.cpp IParser.h Parser_D_0.h Parser_D_1.h \
+ bit_extractor.h cpuid_response.h ParserString.h
 Parser_D_1.o: Parser_D_1.cpp IParser.h Parser_D_1.h bit_extractor.h \
  cpuid_response.h ParserString.h
 ParserString.o: ParserString.cpp ParserString.h
