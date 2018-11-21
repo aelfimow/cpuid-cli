@@ -10,21 +10,26 @@
 
 
 Parser_D_0::Parser_D_0(cpuid_response const &data) :
-    result { }
+    m_result { },
+    m_next { nullptr }
 {
-    parseRAX(data.RAX());
-    parseRBX(data.RBX());
-    parseRCX(data.RCX());
-    parseRDX(data.RDX());
+    if (0 == data.RCX_Command())
+    {
+        parseRAX(data.RAX());
+        parseRBX(data.RBX());
+        parseRCX(data.RCX());
+        parseRDX(data.RDX());
+    }
 }
 
 Parser_D_0::~Parser_D_0()
 {
+    delete m_next;
 }
 
 parse_result_t Parser_D_0::parse() const
 {
-    return result;
+    return m_result;
 }
 
 void Parser_D_0::parseRAX(size_t value)
@@ -45,7 +50,7 @@ void Parser_D_0::parseRAX(size_t value)
     for (auto &t: table)
     {
         ParserString pstr { t.second, extr.extract(t.first) };
-        result.push_back(pstr.str());
+        m_result.push_back(pstr.str());
     }
 }
 
@@ -59,7 +64,7 @@ void Parser_D_0::parseRBX(size_t value)
         extr.extract(31, 0)
     };
 
-    result.push_back(pstr.str());
+    m_result.push_back(pstr.str());
 }
 
 void Parser_D_0::parseRCX(size_t value)
@@ -72,7 +77,7 @@ void Parser_D_0::parseRCX(size_t value)
         extr.extract(31, 0)
     };
 
-    result.push_back(pstr.str());
+    m_result.push_back(pstr.str());
 }
 
 void Parser_D_0::parseRDX(size_t value)
@@ -85,5 +90,5 @@ void Parser_D_0::parseRDX(size_t value)
         bin_value.to_string()
     };
 
-    result.push_back(pstr.str());
+    m_result.push_back(pstr.str());
 }

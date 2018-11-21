@@ -14,7 +14,8 @@ class Parser_D_0 : public IParser
         parse_result_t parse() const override final;
 
     private:
-        parse_result_t result;
+        parse_result_t m_result;
+        IParser *m_next;
 
         void parseRAX(size_t value);
         void parseRBX(size_t value);
@@ -23,6 +24,8 @@ class Parser_D_0 : public IParser
 
     public:
         Parser_D_0() = delete;
+        Parser_D_0(Parser_D_0 const &) = delete;
+        Parser_D_0 &operator=(Parser_D_0 const &) = delete;
 };
 
 #endif
