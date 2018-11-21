@@ -13,7 +13,9 @@ Parser_D_0::Parser_D_0(cpuid_response const &data) :
     m_result { },
     m_next { nullptr }
 {
-    if (0 == data.RCX_Command())
+    bool response_ok = (0 == data.RCX_Command());
+
+    if (response_ok)
     {
         parseRAX(data.RAX());
         parseRBX(data.RBX());
