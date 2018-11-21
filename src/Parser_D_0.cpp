@@ -4,6 +4,7 @@
 
 #include "IParser.h"
 #include "Parser_D_0.h"
+#include "Parser_D_1.h"
 #include "bit_extractor.h"
 #include "cpuid_response.h"
 #include "ParserString.h"
@@ -22,6 +23,10 @@ Parser_D_0::Parser_D_0(cpuid_response const &data) :
         parseRCX(data.RCX());
         parseRDX(data.RDX());
     }
+    else
+    {
+        m_next = new Parser_D_1 { data };
+    }
 }
 
 Parser_D_0::~Parser_D_0()
@@ -31,6 +36,11 @@ Parser_D_0::~Parser_D_0()
 
 parse_result_t Parser_D_0::parse() const
 {
+    if (m_next != nullptr)
+    {
+        return m_next->parse();
+    }
+
     return m_result;
 }
 
