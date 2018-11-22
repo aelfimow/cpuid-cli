@@ -52,6 +52,14 @@ void Parser_F_0::parseRAX(size_t value)
 void Parser_F_0::parseRBX(size_t value)
 {
     bit_extractor extr { value };
+
+    ParserString pstr
+    {
+        "Maximum range of RMID within this physical processor of all types",
+        extr.extract(31, 0)
+    };
+
+    m_result.push_back(pstr.str());
 }
 
 void Parser_F_0::parseRCX(size_t value)
@@ -62,4 +70,9 @@ void Parser_F_0::parseRCX(size_t value)
 void Parser_F_0::parseRDX(size_t value)
 {
     bit_extractor extr { value };
+
+    if (extr.extract(1))
+    {
+        m_result.push_back("Supports L3 Cache Intel RDT Monitoring");
+    }
 }
