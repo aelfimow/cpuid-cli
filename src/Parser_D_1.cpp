@@ -31,6 +31,11 @@ Parser_D_1::~Parser_D_1()
 
 parse_result_t Parser_D_1::parse() const
 {
+    if (m_next != nullptr)
+    {
+        return m_next->parse();
+    }
+
     return m_result;
 }
 
