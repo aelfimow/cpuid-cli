@@ -13,7 +13,7 @@ Parser_F_1::Parser_F_1(cpuid_response const &data) :
     m_result { },
     m_next { nullptr }
 {
-    bool response_ok = (0 == data.RCX_Command());
+    bool response_ok = (1 == data.RCX_Command());
 
     if (response_ok)
     {
@@ -47,14 +47,45 @@ void Parser_F_1::parseRAX(size_t value)
 void Parser_F_1::parseRBX(size_t value)
 {
     bit_extractor extr { value };
+
+    ParserString pstr
+    {
+        "Conversion factor from reported IA32_QM_CTR value to occupancy metric",
+        extr.extract(31, 0)
+    };
+
+    m_result.push_back(pstr.str());
 }
 
 void Parser_F_1::parseRCX(size_t value)
 {
     bit_extractor extr { value };
+
+    ParserString pstr
+    {
+        "Maximum range (zero-based) of RMID of this resource type",
+        extr.extract(31, 0)
+    };
+
+    m_result.push_back(pstr.str());
 }
 
 void Parser_F_1::parseRDX(size_t value)
 {
     bit_extractor extr { value };
+
+    std::map<size_t, std::string> const table
+    {
+        { 0, "Supports L3 occupancy monitoring" },
+        { 1, "Supports L3 Total Bandwidth monitoring" },
+        { 2, "Supports L3 Local Bandwidth monitoring" }
+    };
+
+    for (auto &t: table)
+    {
+        if (extr.extract(t.first))
+        {
+            m_result.push_back(t.second);
+        }
+    }
 }
