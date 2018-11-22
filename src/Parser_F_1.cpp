@@ -22,10 +22,6 @@ Parser_F_1::Parser_F_1(cpuid_response const &data) :
         parseRCX(data.RCX());
         parseRDX(data.RDX());
     }
-    else
-    {
-        m_next = new Parser_F_1 { data };
-    }
 }
 
 Parser_F_1::~Parser_F_1()
