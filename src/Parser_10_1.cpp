@@ -1,5 +1,6 @@
 #include "IParser.h"
 #include "Parser_10_1.h"
+#include "Parser_10_2.h"
 #include "bit_extractor.h"
 #include "cpuid_response.h"
 #include "ParserString.h"
@@ -17,6 +18,10 @@ Parser_10_1::Parser_10_1(cpuid_response const &data) :
         parseRBX(data.RBX());
         parseRCX(data.RCX());
         parseRDX(data.RDX());
+    }
+    else
+    {
+        m_next = new Parser_10_2 { data };
     }
 }
 
