@@ -5,7 +5,6 @@
 #include "Parser_10_0.h"
 #include "bit_extractor.h"
 #include "cpuid_response.h"
-#include "ParserString.h"
 
 
 Parser_10_0::Parser_10_0(cpuid_response const &data) :
