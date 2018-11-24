@@ -6,6 +6,8 @@ main.o: main.cpp IParser.h Parser_0_0.h Parser_1_0.h Parser_2_0.h \
  cpuid_response.h cpuid_func.h
 Parser_0_0.o: Parser_0_0.cpp IParser.h Parser_0_0.h cpuid_response.h \
  bit_extractor.h ParserString.h
+Parser_10_0.o: Parser_10_0.cpp IParser.h Parser_10_0.h bit_extractor.h \
+ cpuid_response.h ParserString.h
 Parser_1_0.o: Parser_1_0.cpp IParser.h Parser_1_0.h cpuid_response.h \
  bit_extractor.h
 Parser_2_0.o: Parser_2_0.cpp IParser.h Parser_2_0.h cpuid_response.h
