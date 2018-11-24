@@ -10,7 +10,9 @@ Parser_10_0.o: Parser_10_0.cpp IParser.h Parser_10_0.h Parser_10_1.h \
  bit_extractor.h cpuid_response.h
 Parser_10_1.o: Parser_10_1.cpp IParser.h Parser_10_1.h Parser_10_2.h \
  bit_extractor.h cpuid_response.h ParserString.h
-Parser_10_2.o: Parser_10_2.cpp IParser.h Parser_10_2.h bit_extractor.h \
+Parser_10_2.o: Parser_10_2.cpp IParser.h Parser_10_2.h Parser_10_3.h \
+ bit_extractor.h cpuid_response.h ParserString.h
+Parser_10_3.o: Parser_10_3.cpp IParser.h Parser_10_3.h bit_extractor.h \
  cpuid_response.h ParserString.h
 Parser_1_0.o: Parser_1_0.cpp IParser.h Parser_1_0.h cpuid_response.h \
  bit_extractor.h
