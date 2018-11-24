@@ -41,7 +41,7 @@ void Parser_10_1::parseRAX(size_t value)
 
     ParserString pstr
     {
-        "Length of the capacity bit mask",
+        "Length of the capacity bit mask for ResID 1",
         1 + extr.extract(4, 0)
     };
 
