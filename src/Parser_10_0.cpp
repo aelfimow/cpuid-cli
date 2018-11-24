@@ -46,6 +46,21 @@ void Parser_10_0::parseRAX(size_t value)
 void Parser_10_0::parseRBX(size_t value)
 {
     bit_extractor extr { value };
+
+    std::map<size_t, std::string> const table
+    {
+        { 1, "Supports L3 Cache Allocation Technology" },
+        { 2, "Supports L2 Cache Allocation Technology" },
+        { 3, "Supports Memory Bandwidth Allocation" }
+    };
+
+    for (auto &t: table)
+    {
+        if (extr.extract(t.first))
+        {
+            m_result.push_back(t.second);
+        }
+    }
 }
 
 void Parser_10_0::parseRCX(size_t value)
