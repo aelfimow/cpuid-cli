@@ -1,6 +1,5 @@
 #include <string>
 #include <map>
-#include <bitset>
 
 #include "IParser.h"
 #include "Parser_F_1.h"
