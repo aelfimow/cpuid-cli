@@ -17,7 +17,7 @@ Parser_12_0.o: Parser_12_0.cpp IParser.h Parser_12_0.h Parser_12_1.h \
 Parser_12_1.o: Parser_12_1.cpp IParser.h Parser_12_1.h Parser_12_2.h \
  bit_extractor.h cpuid_response.h ParserString.h
 Parser_12_2.o: Parser_12_2.cpp IParser.h Parser_12_2.h bit_extractor.h \
- cpuid_response.h
+ cpuid_response.h ParserString.h
 Parser_1_0.o: Parser_1_0.cpp IParser.h Parser_1_0.h cpuid_response.h \
  bit_extractor.h
 Parser_2_0.o: Parser_2_0.cpp IParser.h Parser_2_0.h cpuid_response.h
