@@ -63,7 +63,13 @@ void Parser_12_0::parseRBX(size_t value)
 
     std::bitset<32> bits { extr.extract(31, 0) };
 
-    m_result.push_back(bits.to_string());
+    ParserString pstr
+    {
+        "Bit vector of supported extended SGX features",
+        bits.to_string()
+    };
+
+    m_result.push_back(pstr.str());
 }
 
 void Parser_12_0::parseRCX(size_t value)
