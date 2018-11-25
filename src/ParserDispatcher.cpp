@@ -17,6 +17,7 @@
 #include "Parser_D_0.h"
 #include "Parser_F_0.h"
 #include "Parser_10_0.h"
+#include "Parser_12_0.h"
 #include "cpuid_response.h"
 
 
@@ -37,7 +38,8 @@ IParser *ParserDispatcher::Parser_for(cpuid_response const &rsp)
         { 0x0B, [](cpuid_response const &d) { return new Parser_B_0(d); } },
         { 0x0D, [](cpuid_response const &d) { return new Parser_D_0(d); } },
         { 0x0F, [](cpuid_response const &d) { return new Parser_F_0(d); } },
-        { 0x10, [](cpuid_response const &d) { return new Parser_10_0(d); } }
+        { 0x10, [](cpuid_response const &d) { return new Parser_10_0(d); } },
+        { 0x12, [](cpuid_response const &d) { return new Parser_12_0(d); } }
     };
 
     if (auto it = factory.find(rsp.RAX_Command()); it != factory.end())
