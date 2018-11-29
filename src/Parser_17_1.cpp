@@ -2,21 +2,44 @@
 #include "Parser_17_1.h"
 #include "bit_extractor.h"
 #include "cpuid_response.h"
+#include "ParserString.h"
 
 
 Parser_17_1::Parser_17_1(cpuid_response const &data) :
     m_result { },
     m_next { nullptr }
 {
-    bool response_ok = (1 == data.RCX_Command());
+    size_t RCX_Command = data.RCX_Command();
 
-    if (response_ok)
+    bool response_ok = ((RCX_Command >= 1) && (RCX_Command <= 3));
+
+    if (!response_ok)
     {
-        parseRAX(data.RAX());
-        parseRBX(data.RBX());
-        parseRCX(data.RCX());
-        parseRDX(data.RDX());
+        return;
     }
+
+    auto toChar = [](size_t value)
+    {
+        return (value == 0) ? ' ' : static_cast<char>(value);
+    };
+
+    size_t const regs[4] { data.RAX(), data.RBX(), data.RDX(), data.RCX() };
+
+    std::string str;
+
+    for (auto r: regs)
+    {
+        bit_extractor bits { r };
+
+        str += toChar(bits.extract(7, 0));
+        str += toChar(bits.extract(15, 8));
+        str += toChar(bits.extract(23, 16));
+        str += toChar(bits.extract(31, 24));
+    }
+
+    ParserString pstr { "Part of Vendor Brand String", str };
+
+    m_result.push_back(pstr.str());
 }
 
 Parser_17_1::~Parser_17_1()
@@ -32,24 +55,4 @@ parse_result_t Parser_17_1::parse() const
     }
 
     return m_result;
-}
-
-void Parser_17_1::parseRAX(size_t value)
-{
-    bit_extractor extr { value };
-}
-
-void Parser_17_1::parseRBX(size_t value)
-{
-    bit_extractor extr { value };
-}
-
-void Parser_17_1::parseRCX(size_t value)
-{
-    bit_extractor extr { value };
-}
-
-void Parser_17_1::parseRDX(size_t value)
-{
-    bit_extractor extr { value };
 }
