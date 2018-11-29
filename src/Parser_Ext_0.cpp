@@ -30,7 +30,7 @@ void Parser_Ext_0::parseRAX(size_t value)
     ParserString pstr
     {
         "Maximum Input Value for Extended Function CPUID Information",
-        extr.extract(31, 0)
+        extr.extract(30, 0)
     };
 
     m_result.push_back(pstr.str());
