@@ -5,6 +5,7 @@
 #include "cpuid_response.h"
 #include "bit_extractor.h"
 #include "ParserString.h"
+#include "CpuRegString.h"
 
 
 Parser_0_0::Parser_0_0(cpuid_response const &data) :
@@ -12,19 +13,13 @@ Parser_0_0::Parser_0_0(cpuid_response const &data) :
     maxInputValue { data.RAX() },
     vendorStr { }
 {
-    auto toChar = [](size_t value) { return static_cast<char>(value); };
+    CpuRegString RBX_str { data.RBX() };
+    CpuRegString RDX_str { data.RDX() };
+    CpuRegString RCX_str { data.RCX() };
 
-    size_t const regs[3] { data.RBX(), data.RDX(), data.RCX() };
-
-    for (auto r: regs)
-    {
-        bit_extractor bits { r };
-
-        vendorStr += toChar(bits.extract(7, 0));
-        vendorStr += toChar(bits.extract(15, 8));
-        vendorStr += toChar(bits.extract(23, 16));
-        vendorStr += toChar(bits.extract(31, 24));
-    }
+    vendorStr += RBX_str.str();
+    vendorStr += RDX_str.str();
+    vendorStr += RCX_str.str();
 }
 
 Parser_0_0::~Parser_0_0()
