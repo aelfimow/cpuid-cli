@@ -1,4 +1,8 @@
+#include <string>
+
 #include "CpuRegString.h"
+#include "bit_extractor.h"
+
 
 CpuRegString::CpuRegString(size_t value) :
     m_str { }
