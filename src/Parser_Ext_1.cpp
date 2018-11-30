@@ -76,7 +76,7 @@ void Parser_Ext_1::parseRDX(size_t value)
         { 20, "Execute Disable Bit available" },
         { 26, "1-GByte pages are available" },
         { 27, "RDTSCP and IA32_TSC_AUX are available" },
-        { 29, "Intel(r) Architecture available" }
+        { 29, "Intel(r) 64 Architecture available" }
     };
 
     for (auto &t: table)
