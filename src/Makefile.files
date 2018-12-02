@@ -67,6 +67,8 @@ Parser_Ext_6.o: Parser_Ext_6.cpp IParser.h Parser_Ext_6.h bit_extractor.h \
  cpuid_response.h ParserString.h
 Parser_Ext_7.o: Parser_Ext_7.cpp IParser.h Parser_Ext_7.h bit_extractor.h \
  cpuid_response.h
+Parser_Ext_8.o: Parser_Ext_8.cpp IParser.h Parser_Ext_8.h bit_extractor.h \
+ cpuid_response.h ParserString.h
 Parser_F_0.o: Parser_F_0.cpp IParser.h Parser_F_0.h Parser_F_1.h \
  bit_extractor.h cpuid_response.h ParserString.h
 Parser_F_1.o: Parser_F_1.cpp IParser.h Parser_F_1.h bit_extractor.h \
@@ -77,5 +79,5 @@ ParserDispatcher.o: ParserDispatcher.cpp ParserDispatcher.h IParser.h \
  Parser_B_0.h Parser_D_0.h Parser_F_0.h Parser_10_0.h Parser_12_0.h \
  Parser_14_0.h Parser_15_0.h Parser_16_0.h Parser_17_0.h Parser_Ext_0.h \
  Parser_Ext_1.h Parser_Ext_2.h Parser_Ext_3.h Parser_Ext_4.h \
- Parser_Ext_6.h Parser_Ext_7.h cpuid_response.h
+ Parser_Ext_6.h Parser_Ext_7.h Parser_Ext_8.h cpuid_response.h
 ParserString.o: ParserString.cpp ParserString.h
