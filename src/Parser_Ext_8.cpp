@@ -2,6 +2,7 @@
 #include "Parser_Ext_8.h"
 #include "bit_extractor.h"
 #include "cpuid_response.h"
+#include "ParserString.h"
 
 
 Parser_Ext_8::Parser_Ext_8(cpuid_response const &data) :
@@ -25,6 +26,17 @@ parse_result_t Parser_Ext_8::parse() const
 void Parser_Ext_8::parseRAX(size_t value)
 {
     bit_extractor extr { value };
+
+    {
+        ParserString pstr { "Physical Address Bits", extr.extract(7, 0) };
+
+        m_result.push_back(pstr.str());
+    }
+    {
+        ParserString pstr { "Linear Address Bits", extr.extract(15, 8) };
+
+        m_result.push_back(pstr.str());
+    }
 }
 
 void Parser_Ext_8::parseRBX(size_t value)
