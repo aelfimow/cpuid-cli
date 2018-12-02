@@ -19,7 +19,7 @@ class IParser
         {
         }
 
-        virtual parse_result_t parse() const = 0;
+        virtual parse_result_t parse() = 0;
 };
 
 #endif

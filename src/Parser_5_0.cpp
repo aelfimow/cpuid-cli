@@ -22,7 +22,7 @@ Parser_5_0::~Parser_5_0()
 {
 }
 
-parse_result_t Parser_5_0::parse() const
+parse_result_t Parser_5_0::parse()
 {
     return result;
 }

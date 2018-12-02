@@ -11,7 +11,7 @@ class Parser_1_0 : public IParser
         explicit Parser_1_0(cpuid_response const &data);
         ~Parser_1_0();
 
-        parse_result_t parse() const override final;
+        parse_result_t parse() override final;
 
     private:
         void parseRAX(size_t value);

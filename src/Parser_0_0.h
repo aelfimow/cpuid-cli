@@ -11,7 +11,7 @@ class Parser_0_0 : public IParser
         explicit Parser_0_0(cpuid_response const &data);
         ~Parser_0_0();
 
-        parse_result_t parse() const override final;
+        parse_result_t parse() override final;
 
     private:
         size_t maxInputValue;

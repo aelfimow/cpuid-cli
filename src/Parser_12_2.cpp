@@ -61,7 +61,7 @@ Parser_12_2::~Parser_12_2()
     delete m_next;
 }
 
-parse_result_t Parser_12_2::parse() const
+parse_result_t Parser_12_2::parse()
 {
     if (m_next != nullptr)
     {

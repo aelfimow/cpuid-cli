@@ -11,7 +11,7 @@ class Parser_D_1 : public IParser
         explicit Parser_D_1(cpuid_response const &data);
         ~Parser_D_1();
 
-        parse_result_t parse() const override final;
+        parse_result_t parse() override final;
 
     private:
         parse_result_t m_result;

@@ -11,7 +11,7 @@ class Parser_5_0 : public IParser
         explicit Parser_5_0(cpuid_response const &data);
         ~Parser_5_0();
 
-        parse_result_t parse() const override final;
+        parse_result_t parse() override final;
 
     private:
         parse_result_t result;

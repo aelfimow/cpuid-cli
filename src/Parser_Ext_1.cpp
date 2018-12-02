@@ -21,7 +21,7 @@ Parser_Ext_1::~Parser_Ext_1()
 {
 }
 
-parse_result_t Parser_Ext_1::parse() const
+parse_result_t Parser_Ext_1::parse()
 {
     return m_result;
 }

@@ -25,7 +25,7 @@ Parser_10_3::~Parser_10_3()
     delete m_next;
 }
 
-parse_result_t Parser_10_3::parse() const
+parse_result_t Parser_10_3::parse()
 {
     if (m_next != nullptr)
     {

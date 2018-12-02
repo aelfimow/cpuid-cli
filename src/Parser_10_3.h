@@ -11,7 +11,7 @@ class Parser_10_3 : public IParser
         explicit Parser_10_3(cpuid_response const &data);
         ~Parser_10_3();
 
-        parse_result_t parse() const override final;
+        parse_result_t parse() override final;
 
     private:
         parse_result_t m_result;

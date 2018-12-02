@@ -18,7 +18,7 @@ Parser_Ext_8::~Parser_Ext_8()
 {
 }
 
-parse_result_t Parser_Ext_8::parse() const
+parse_result_t Parser_Ext_8::parse()
 {
     return m_result;
 }

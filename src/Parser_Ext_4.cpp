@@ -32,7 +32,7 @@ Parser_Ext_4::~Parser_Ext_4()
 {
 }
 
-parse_result_t Parser_Ext_4::parse() const
+parse_result_t Parser_Ext_4::parse()
 {
     return m_result;
 }
