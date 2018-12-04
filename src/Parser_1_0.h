@@ -23,7 +23,12 @@ class Parser_1_0 : public IParser
         std::map<size_t, std::string> featuresRDX() const;
 
     private:
-        parse_result_t result;
+        size_t const m_RAX;
+        size_t const m_RBX;
+        size_t const m_RCX;
+        size_t const m_RDX;
+
+        parse_result_t m_result;
 
     public:
         Parser_1_0() = delete;

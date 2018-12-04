@@ -6,16 +6,17 @@
 #include "Parser_1_0.h"
 #include "cpuid_response.h"
 #include "bit_extractor.h"
+#include "ParserString.h"
 
 
 Parser_1_0::Parser_1_0(cpuid_response const &data) :
     IParser { },
-    result { }
+    m_RAX { data.RAX() },
+    m_RBX { data.RBX() },
+    m_RCX { data.RCX() },
+    m_RDX { data.RDX() },
+    m_result { }
 {
-    parseRAX(data.RAX());
-    parseRBX(data.RBX());
-    parseRCX(data.RCX());
-    parseRDX(data.RDX());
 }
 
 Parser_1_0::~Parser_1_0()
@@ -24,26 +25,30 @@ Parser_1_0::~Parser_1_0()
 
 parse_result_t Parser_1_0::parse()
 {
-    return result;
+    m_result.clear();
+
+    parseRAX(m_RAX);
+    parseRBX(m_RBX);
+    parseRCX(m_RCX);
+    parseRDX(m_RDX);
+
+    return m_result;
 }
 
 void Parser_1_0::parseRAX(size_t value)
 {
     bit_extractor bits { value };
 
-    size_t const steppingID = bits.extract(3, 0);
-    const size_t modelID = bits.extract(7, 4);
+    ParserString pstr;
+
     const size_t familyID = bits.extract(11, 8);
-    const size_t procType = bits.extract(13, 12);
-    const size_t extendedModelID = bits.extract(19, 16);
-    const size_t extendedFamilyID = bits.extract(27, 20);
 
     {
-        std::stringstream ss;
-        ss << std::hex << steppingID;
-        std::string str { "Stepping ID: " };
-        str += ss.str();
-        result.push_back(str);
+        pstr.clear()
+            .prefix("Stepping ID")
+            .append(bits.extract(3, 0));
+
+        m_result.push_back(pstr.str());
     }
     {
         std::map<size_t, std::string> typeField
@@ -53,39 +58,34 @@ void Parser_1_0::parseRAX(size_t value)
             { 2, "Dual processor" },
             { 3, "reserved" }
         };
-        std::string str { "Processor Type: " };
-        str += typeField[procType];
-        result.push_back(str);
+
+        size_t const procType = bits.extract(13, 12);
+
+        pstr.clear().prefix("Processor Type").append(typeField[procType]);
+
+        m_result.push_back(pstr.str());
     }
     {
-        std::string str { "Family ID: " };
-        std::stringstream ss;
-        if (familyID != 15)
-        {
-            ss << std::hex << familyID;
-        }
-        else
-        {
-            size_t sum = extendedFamilyID + familyID;
-            ss << std::hex << sum;
-        }
-        str += ss.str();
-        result.push_back(str);
+        size_t const extendedFamilyID = bits.extract(27, 20);
+
+        size_t const sum = (familyID != 15) ? familyID : (extendedFamilyID + familyID);
+
+        pstr.clear().prefix("Family ID").append(sum);
+
+        m_result.push_back(pstr.str());
     }
     {
-        std::string str { "Model ID: " };
-        std::stringstream ss;
-        if ((familyID == 6) || (familyID == 15))
-        {
-            size_t sum = (extendedModelID << 4) + modelID;
-            ss << std::hex << sum;
-        }
-        else
-        {
-            ss << std::hex << modelID;
-        }
-        str += ss.str();
-        result.push_back(str);
+        const size_t modelID = bits.extract(7, 4);
+        const size_t extendedModelID = bits.extract(19, 16);
+
+        pstr.clear().prefix("Model ID");
+
+        size_t const sum = ((familyID == 6) || (familyID == 15)) ?
+            (16 * extendedModelID) + modelID : modelID;
+
+        pstr.append(sum);
+
+        m_result.push_back(pstr.str());
     }
 }
 
@@ -99,19 +99,19 @@ void Parser_1_0::parseRBX(size_t value)
 
     std::stringstream ss1;
     ss1 << "Brand index: " << brandIndex;
-    result.push_back(ss1.str());
+    m_result.push_back(ss1.str());
 
     std::stringstream ss2;
     ss2 << "CLFLUSH line size in bytes: " << lineSize;
-    result.push_back(ss2.str());
+    m_result.push_back(ss2.str());
 
     std::stringstream ss3;
     ss3 << "Maximum number of addressable IDs for logical processors: " << idsNumber;
-    result.push_back(ss3.str());
+    m_result.push_back(ss3.str());
 
     std::stringstream ss4;
     ss4 << "Initial APIC ID: " << apicID;
-    result.push_back(ss4.str());
+    m_result.push_back(ss4.str());
 }
 
 void Parser_1_0::parseRCX(size_t value)
@@ -126,7 +126,7 @@ void Parser_1_0::parseRCX(size_t value)
 
         if (featureBits[bitpos])
         {
-            result.push_back(str);
+            m_result.push_back(str);
         }
     }
 }
@@ -143,7 +143,7 @@ void Parser_1_0::parseRDX(size_t value)
 
         if (featureBits[bitpos])
         {
-            result.push_back(str);
+            m_result.push_back(str);
         }
     }
 }
