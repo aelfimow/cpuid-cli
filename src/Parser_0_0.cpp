@@ -10,16 +10,12 @@
 
 Parser_0_0::Parser_0_0(cpuid_response const &data) :
     IParser { },
-    maxInputValue { data.RAX() },
-    vendorStr { }
+    m_RAX { data.RAX() },
+    m_RBX { data.RBX() },
+    m_RCX { data.RCX() },
+    m_RDX { data.RDX() },
+    m_result { }
 {
-    CpuRegString RBX_str { data.RBX() };
-    CpuRegString RDX_str { data.RDX() };
-    CpuRegString RCX_str { data.RCX() };
-
-    vendorStr += RBX_str.str();
-    vendorStr += RDX_str.str();
-    vendorStr += RCX_str.str();
 }
 
 Parser_0_0::~Parser_0_0()
@@ -28,12 +24,31 @@ Parser_0_0::~Parser_0_0()
 
 parse_result_t Parser_0_0::parse()
 {
-    parse_result_t result;
+    m_result.clear();
 
-    ParserString pstr { "Maximum input value for basic CPUID", maxInputValue };
+    ParserString pstr;
 
-    result.push_back(pstr.str());
-    result.push_back(vendorStr);
+    {
+        pstr.clear()
+            .prefix("Maximum input value for basic CPUID")
+            .append(m_RAX);
 
-    return result;
+        m_result.push_back(pstr.str());
+    }
+
+    {
+        CpuRegString RBX_str { m_RBX };
+        CpuRegString RDX_str { m_RDX };
+        CpuRegString RCX_str { m_RCX };
+
+        pstr.clear()
+            .prefix("Vendor")
+            .append(RBX_str.str())
+            .append(RDX_str.str())
+            .append(RCX_str.str());
+
+        m_result.push_back(pstr.str());
+    }
+
+    return m_result;
 }
