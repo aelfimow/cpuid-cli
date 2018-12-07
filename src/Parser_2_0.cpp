@@ -9,9 +9,23 @@
 
 Parser_2_0::Parser_2_0(cpuid_response const &data) :
     IParser { },
-    result { }
+    m_RAX { data.RAX() },
+    m_RBX { data.RBX() },
+    m_RCX { data.RCX() },
+    m_RDX { data.RDX() },
+    m_result { }
 {
-    size_t const regs[] { (data.RAX() & 0xFFFFFF00), data.RBX(), data.RCX(), data.RDX() };
+}
+
+Parser_2_0::~Parser_2_0()
+{
+}
+
+parse_result_t Parser_2_0::parse()
+{
+    m_result.clear();
+
+    size_t const regs[] { (m_RAX & 0xFFFFFF00), m_RBX, m_RCX, m_RDX };
 
     for (auto r: regs)
     {
@@ -25,15 +39,8 @@ Parser_2_0::Parser_2_0(cpuid_response const &data) :
             parse(descriptors);
         }
     }
-}
 
-Parser_2_0::~Parser_2_0()
-{
-}
-
-parse_result_t Parser_2_0::parse()
-{
-    return result;
+    return m_result;
 }
 
 std::vector<uint8_t> Parser_2_0::split(size_t value) const
@@ -63,7 +70,7 @@ void Parser_2_0::parse(std::vector<uint8_t> &descriptors)
 
         if (!isEmpty)
         {
-            result.push_back(str);
+            m_result.push_back(str);
         }
     }
 }
