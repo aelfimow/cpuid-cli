@@ -1,4 +1,3 @@
-#include <sstream>
 #include <bitset>
 #include <map>
 
@@ -92,26 +91,32 @@ void Parser_1_0::parseRAX(size_t value)
 void Parser_1_0::parseRBX(size_t value)
 {
     bit_extractor bits { value };
-    size_t const brandIndex = bits.extract(7, 0);
-    size_t const lineSize = 8 * bits.extract(15, 8);
-    size_t const idsNumber = bits.extract(23, 16);
-    size_t const apicID = bits.extract(31, 24);
 
-    std::stringstream ss1;
-    ss1 << "Brand index: " << brandIndex;
-    m_result.push_back(ss1.str());
+    ParserString pstr;
 
-    std::stringstream ss2;
-    ss2 << "CLFLUSH line size in bytes: " << lineSize;
-    m_result.push_back(ss2.str());
+    pstr.clear()
+        .prefix("Brand index")
+        .append(bits.extract(7, 0));
 
-    std::stringstream ss3;
-    ss3 << "Maximum number of addressable IDs for logical processors: " << idsNumber;
-    m_result.push_back(ss3.str());
+    m_result.push_back(pstr.str());
 
-    std::stringstream ss4;
-    ss4 << "Initial APIC ID: " << apicID;
-    m_result.push_back(ss4.str());
+    pstr.clear()
+        .prefix("CLFLUSH line size in bytes")
+        .append(8 * bits.extract(15, 8));
+
+    m_result.push_back(pstr.str());
+
+    pstr.clear()
+        .prefix("Maximum number of addressable IDs for logical processors")
+        .append(bits.extract(23, 16));
+
+    m_result.push_back(pstr.str());
+
+    pstr.clear()
+        .prefix("Initial APIC ID")
+        .append(bits.extract(31, 24));
+
+    m_result.push_back(pstr.str());
 }
 
 void Parser_1_0::parseRCX(size_t value)
