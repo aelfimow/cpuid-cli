@@ -9,7 +9,9 @@ FILES = $(wildcard *.cpp)
 FILES_OBJ = $(FILES:.cpp=.o)
 
 all:
-	@echo Specify: windows or linux
+	$(info For Windows use: $(MAKE) windows)
+	$(info For Linux use: $(MAKE) linux)
+	$(error Missing argument)
 
 windows: compile cpuid_windows
 	g++ *.o -o cpuid-cli.exe ${CXXFLAGS} ${WARNINGS}
