@@ -34,7 +34,8 @@ Parser_17_1.o: Parser_17_1.cpp IParser.h Parser_17_1.h bit_extractor.h \
 Parser_1_0.o: Parser_1_0.cpp IParser.h Parser_1_0.h cpuid_response.h \
  bit_extractor.h ParserString.h
 Parser_2_0.o: Parser_2_0.cpp IParser.h Parser_2_0.h cpuid_response.h
-Parser_3_0.o: Parser_3_0.cpp IParser.h Parser_3_0.h cpuid_response.h
+Parser_3_0.o: Parser_3_0.cpp IParser.h Parser_3_0.h cpuid_response.h \
+ ParserString.h
 Parser_4_0.o: Parser_4_0.cpp IParser.h Parser_4_0.h bit_extractor.h \
  cpuid_response.h ParserString.h
 Parser_5_0.o: Parser_5_0.cpp IParser.h Parser_5_0.h bit_extractor.h \
