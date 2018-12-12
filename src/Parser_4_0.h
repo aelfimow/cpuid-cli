@@ -14,8 +14,13 @@ class Parser_4_0 : public IParser
         parse_result_t parse() override final;
 
     private:
-        parse_result_t result;
-        bool moreCaches;
+        size_t const m_RAX;
+        size_t const m_RBX;
+        size_t const m_RCX;
+        size_t const m_RDX;
+
+        parse_result_t m_result;
+        bool m_moreCaches;
 
         void parseRAX(size_t value);
         void parseRBX(size_t value);
