@@ -9,12 +9,12 @@
 
 
 Parser_6_0::Parser_6_0(cpuid_response const &data) :
-    result { }
+    m_RAX { data.RAX() },
+    m_RBX { data.RBX() },
+    m_RCX { data.RCX() },
+    m_RDX { data.RDX() },
+    m_result { }
 {
-    parseRAX(data.RAX());
-    parseRBX(data.RBX());
-    parseRCX(data.RCX());
-    parseRDX(data.RDX());
 }
 
 Parser_6_0::~Parser_6_0()
@@ -23,7 +23,14 @@ Parser_6_0::~Parser_6_0()
 
 parse_result_t Parser_6_0::parse()
 {
-    return result;
+    m_result.clear();
+
+    parseRAX(m_RAX);
+    parseRBX(m_RBX);
+    parseRCX(m_RCX);
+    parseRDX(m_RDX);
+
+    return m_result;
 }
 
 void Parser_6_0::parseRAX(size_t value)
@@ -50,7 +57,7 @@ void Parser_6_0::parseRAX(size_t value)
     {
         if (extr.extract(t.first))
         {
-            result.push_back(t.second);
+            m_result.push_back(t.second);
         }
     }
 }
@@ -65,7 +72,7 @@ void Parser_6_0::parseRBX(size_t value)
         extr.extract(3, 0)
     };
 
-    result.push_back(pstr.str());
+    m_result.push_back(pstr.str());
 }
 
 void Parser_6_0::parseRCX(size_t value)
@@ -74,12 +81,12 @@ void Parser_6_0::parseRCX(size_t value)
 
     if (extr.extract(0))
     {
-        result.push_back("Hardware Coordination Feedback Capability");
+        m_result.push_back("Hardware Coordination Feedback Capability");
     }
 
     if (extr.extract(3))
     {
-        result.push_back("The processor supports performance-energy bias preference");
+        m_result.push_back("The processor supports performance-energy bias preference");
     }
 }
 
