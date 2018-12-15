@@ -10,12 +10,12 @@
 
 
 Parser_5_0::Parser_5_0(cpuid_response const &data) :
-    result { }
+    m_RAX { data.RAX() },
+    m_RBX { data.RBX() },
+    m_RCX { data.RCX() },
+    m_RDX { data.RDX() },
+    m_result { }
 {
-    parseRAX(data.RAX());
-    parseRBX(data.RBX());
-    parseRCX(data.RCX());
-    parseRDX(data.RDX());
 }
 
 Parser_5_0::~Parser_5_0()
@@ -24,21 +24,28 @@ Parser_5_0::~Parser_5_0()
 
 parse_result_t Parser_5_0::parse()
 {
-    return result;
+    m_result.clear();
+
+    parseRAX(m_RAX);
+    parseRBX(m_RBX);
+    parseRCX(m_RCX);
+    parseRDX(m_RDX);
+
+    return m_result;
 }
 
 void Parser_5_0::parseRAX(size_t value)
 {
     bit_extractor extr { value };
     ParserString pstr { "Smallest monitor-line size in bytes", extr.extract(15, 0) };
-    result.push_back(pstr.str());
+    m_result.push_back(pstr.str());
 }
 
 void Parser_5_0::parseRBX(size_t value)
 {
     bit_extractor extr { value };
     ParserString pstr { "Largest monitor-line size in bytes", extr.extract(15, 0) };
-    result.push_back(pstr.str());
+    m_result.push_back(pstr.str());
 }
 
 void Parser_5_0::parseRCX(size_t value)
@@ -47,12 +54,12 @@ void Parser_5_0::parseRCX(size_t value)
 
     if (extr.extract(0))
     {
-        result.push_back("Enumeration of Monitor-Mwait extensions supported");
+        m_result.push_back("Enumeration of Monitor-Mwait extensions supported");
     }
 
     if (extr.extract(1))
     {
-        result.push_back("Treating interrupts as break-event for MWAIT, even when interrupts disabled, supported");
+        m_result.push_back("Treating interrupts as break-event for MWAIT, even when interrupts disabled, supported");
     }
 }
 
@@ -75,6 +82,6 @@ void Parser_5_0::parseRDX(size_t value)
     for (auto &t: table)
     {
         ParserString pstr { t.first, extr.extract(t.second) };
-        result.push_back(pstr.str());
+        m_result.push_back(pstr.str());
     }
 }
