@@ -14,8 +14,14 @@ class Parser_7_0 : public IParser
         parse_result_t parse() override final;
 
     private:
-        parse_result_t result;
-        bool infoAvail;
+        size_t const m_RAX;
+        size_t const m_RBX;
+        size_t const m_RCX;
+        size_t const m_RDX;
+
+        parse_result_t m_result;
+
+        bool m_infoAvail;
 
         void parseRAX(size_t value);
         void parseRBX(size_t value);

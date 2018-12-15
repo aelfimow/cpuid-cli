@@ -9,17 +9,13 @@
 
 
 Parser_7_0::Parser_7_0(cpuid_response const &data) :
-    result { },
-    infoAvail { false }
+    m_RAX { data.RAX() },
+    m_RBX { data.RBX() },
+    m_RCX { data.RCX() },
+    m_RDX { data.RDX() },
+    m_result { },
+    m_infoAvail { false }
 {
-    parseRAX(data.RAX());
-
-    if (infoAvail)
-    {
-        parseRBX(data.RBX());
-        parseRCX(data.RCX());
-        parseRDX(data.RDX());
-    }
 }
 
 Parser_7_0::~Parser_7_0()
@@ -28,15 +24,27 @@ Parser_7_0::~Parser_7_0()
 
 parse_result_t Parser_7_0::parse()
 {
-    return result;
+    m_result.clear();
+    m_infoAvail = false;
+
+    parseRAX(m_RAX);
+
+    if (m_infoAvail)
+    {
+        parseRBX(m_RBX);
+        parseRCX(m_RCX);
+        parseRDX(m_RDX);
+    }
+
+    return m_result;
 }
 
 void Parser_7_0::parseRAX(size_t value)
 {
     ParserString pstr { "Maximum input value for supported sub-leaves", value };
-    result.push_back(pstr.str());
+    m_result.push_back(pstr.str());
 
-    infoAvail = (value != 0);
+    m_infoAvail = (value != 0);
 }
 
 void Parser_7_0::parseRBX(size_t value)
@@ -74,7 +82,7 @@ void Parser_7_0::parseRBX(size_t value)
     {
         if (extr.extract(t.first))
         {
-            result.push_back(t.second);
+            m_result.push_back(t.second);
         }
     }
 }
@@ -97,7 +105,7 @@ void Parser_7_0::parseRCX(size_t value)
     {
         if (extr.extract(t.first))
         {
-            result.push_back(t.second);
+            m_result.push_back(t.second);
         }
     }
 
@@ -107,7 +115,7 @@ void Parser_7_0::parseRCX(size_t value)
         extr.extract(21, 17)
     };
 
-    result.push_back(pstr.str());
+    m_result.push_back(pstr.str());
 }
 
 void Parser_7_0::parseRDX(size_t value)
