@@ -14,7 +14,12 @@ class Parser_B_0 : public IParser
         parse_result_t parse() override final;
 
     private:
-        parse_result_t result;
+        size_t const m_RAX;
+        size_t const m_RBX;
+        size_t const m_RCX;
+        size_t const m_RDX;
+
+        parse_result_t m_result;
         bool sub_leaf_valid;
         size_t shift_value;
 

@@ -9,18 +9,14 @@
 
 
 Parser_B_0::Parser_B_0(cpuid_response const &data) :
-    result { },
+    m_RAX { data.RAX() },
+    m_RBX { data.RBX() },
+    m_RCX { data.RCX() },
+    m_RDX { data.RDX() },
+    m_result { },
     sub_leaf_valid { false },
     shift_value { 0 }
 {
-    parseRCX(data.RCX());
-
-    if (sub_leaf_valid)
-    {
-        parseRAX(data.RAX());
-        parseRBX(data.RBX());
-        parseRDX(data.RDX());
-    }
 }
 
 Parser_B_0::~Parser_B_0()
@@ -29,7 +25,20 @@ Parser_B_0::~Parser_B_0()
 
 parse_result_t Parser_B_0::parse()
 {
-    return result;
+    m_result.clear();
+    sub_leaf_valid = false;
+    shift_value = 0;
+
+    parseRCX(m_RCX);
+
+    if (sub_leaf_valid)
+    {
+        parseRAX(m_RAX);
+        parseRBX(m_RBX);
+        parseRDX(m_RDX);
+    }
+
+    return m_result;
 }
 
 void Parser_B_0::parseRAX(size_t value)
@@ -45,7 +54,7 @@ void Parser_B_0::parseRBX(size_t value)
 
     ParserString pstr { "Number of logical processors at this level type", extr.extract(15, 0) };
 
-    result.push_back(pstr.str());
+    m_result.push_back(pstr.str());
 }
 
 void Parser_B_0::parseRCX(size_t value)
@@ -66,7 +75,7 @@ void Parser_B_0::parseRCX(size_t value)
 
         if (auto it = table.find(level_type); it != table.end())
         {
-            result.push_back("Level type is " + it->second);
+            m_result.push_back("Level type is " + it->second);
         }
     }
 }
