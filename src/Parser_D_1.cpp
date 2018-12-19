@@ -10,30 +10,29 @@
 
 
 Parser_D_1::Parser_D_1(cpuid_response const &data) :
-    m_result { },
-    m_next { nullptr }
+    m_RAX { data.RAX() },
+    m_RBX { data.RBX() },
+    m_RCX { data.RCX() },
+    m_RDX { data.RDX() },
+    m_response_ok { 1 == data.RCX_Command() },
+    m_result { }
 {
-    bool response_ok = (1 == data.RCX_Command());
-
-    if (response_ok)
-    {
-        parseRAX(data.RAX());
-        parseRBX(data.RBX());
-        parseRCX(data.RCX());
-        parseRDX(data.RDX());
-    }
 }
 
 Parser_D_1::~Parser_D_1()
 {
-    delete m_next;
 }
 
 parse_result_t Parser_D_1::parse()
 {
-    if (m_next != nullptr)
+    m_result.clear();
+
+    if (m_response_ok)
     {
-        return m_next->parse();
+        parseRAX(m_RAX);
+        parseRBX(m_RBX);
+        parseRCX(m_RCX);
+        parseRDX(m_RDX);
     }
 
     return m_result;
