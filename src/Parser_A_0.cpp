@@ -10,12 +10,12 @@
 
 
 Parser_A_0::Parser_A_0(cpuid_response const &data) :
-    result { }
+    m_RAX { data.RAX() },
+    m_RBX { data.RBX() },
+    m_RCX { data.RCX() },
+    m_RDX { data.RDX() },
+    m_result { }
 {
-    parseRAX(data.RAX());
-    parseRBX(data.RBX());
-    parseRCX(data.RCX());
-    parseRDX(data.RDX());
 }
 
 Parser_A_0::~Parser_A_0()
@@ -24,7 +24,14 @@ Parser_A_0::~Parser_A_0()
 
 parse_result_t Parser_A_0::parse()
 {
-    return result;
+    m_result.clear();
+
+    parseRAX(m_RAX);
+    parseRBX(m_RBX);
+    parseRCX(m_RCX);
+    parseRDX(m_RDX);
+
+    return m_result;
 }
 
 void Parser_A_0::parseRAX(size_t value)
@@ -43,7 +50,7 @@ void Parser_A_0::parseRAX(size_t value)
     {
         ParserString pstr { t.first, extr.extract(t.second) };
 
-        result.push_back(pstr.str());
+        m_result.push_back(pstr.str());
     }
 }
 
@@ -68,7 +75,7 @@ void Parser_A_0::parseRBX(size_t value)
 
         str.append(extr.extract(t.first) ? " not available" : " available");
 
-        result.push_back(str);
+        m_result.push_back(str);
     }
 }
 
@@ -88,7 +95,7 @@ void Parser_A_0::parseRDX(size_t value)
             extr.extract(4, 0)
         };
 
-        result.push_back(pstr.str());
+        m_result.push_back(pstr.str());
     }
 
     {
@@ -98,6 +105,6 @@ void Parser_A_0::parseRDX(size_t value)
             extr.extract(12, 5)
         };
 
-        result.push_back(pstr.str());
+        m_result.push_back(pstr.str());
     }
 }
