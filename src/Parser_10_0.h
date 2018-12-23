@@ -20,7 +20,7 @@ class Parser_10_0 : public IParser
         size_t const m_RDX;
 
         parse_result_t m_result;
-        IParser *m_next;
+        IParser * const m_next;
 
         void parseRAX(size_t value);
         void parseRBX(size_t value);
