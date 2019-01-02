@@ -9,12 +9,12 @@
 
 
 Parser_Ext_6::Parser_Ext_6(cpuid_response const &data) :
+    m_RAX { data.RAX() },
+    m_RBX { data.RBX() },
+    m_RCX { data.RCX() },
+    m_RDX { data.RDX() },
     m_result { }
 {
-    parseRAX(data.RAX());
-    parseRBX(data.RBX());
-    parseRCX(data.RCX());
-    parseRDX(data.RDX());
 }
 
 Parser_Ext_6::~Parser_Ext_6()
@@ -23,6 +23,13 @@ Parser_Ext_6::~Parser_Ext_6()
 
 parse_result_t Parser_Ext_6::parse()
 {
+    m_result.clear();
+
+    parseRAX(m_RAX);
+    parseRBX(m_RBX);
+    parseRCX(m_RCX);
+    parseRDX(m_RDX);
+
     return m_result;
 }
 
