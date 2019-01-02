@@ -9,12 +9,26 @@
 
 
 Parser_Ext_3::Parser_Ext_3(cpuid_response const &data) :
+    m_RAX { data.RAX() },
+    m_RBX { data.RBX() },
+    m_RCX { data.RCX() },
+    m_RDX { data.RDX() },
     m_result { }
 {
-    CpuRegString RAX_str { data.RAX() };
-    CpuRegString RBX_str { data.RBX() };
-    CpuRegString RCX_str { data.RCX() };
-    CpuRegString RDX_str { data.RDX() };
+}
+
+Parser_Ext_3::~Parser_Ext_3()
+{
+}
+
+parse_result_t Parser_Ext_3::parse()
+{
+    m_result.clear();
+
+    CpuRegString RAX_str { m_RAX };
+    CpuRegString RBX_str { m_RBX };
+    CpuRegString RCX_str { m_RCX };
+    CpuRegString RDX_str { m_RDX };
 
     std::string str;
 
@@ -26,13 +40,6 @@ Parser_Ext_3::Parser_Ext_3(cpuid_response const &data) :
     ParserString pstr { "Processor Brand String", str };
 
     m_result.push_back(pstr.str());
-}
 
-Parser_Ext_3::~Parser_Ext_3()
-{
-}
-
-parse_result_t Parser_Ext_3::parse()
-{
     return m_result;
 }
