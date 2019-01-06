@@ -7,22 +7,35 @@
 
 
 Parser_17_1::Parser_17_1(cpuid_response const &data) :
+    m_RAX { data.RAX() },
+    m_RBX { data.RBX() },
+    m_RCX { data.RCX() },
+    m_RDX { data.RDX() },
     m_result { },
-    m_next { nullptr }
+    m_response_ok { false }
 {
     size_t RCX_Command = data.RCX_Command();
 
-    bool response_ok = ((RCX_Command >= 1) && (RCX_Command <= 3));
+    m_response_ok = ((RCX_Command >= 1) && (RCX_Command <= 3));
+}
 
-    if (!response_ok)
+Parser_17_1::~Parser_17_1()
+{
+}
+
+parse_result_t Parser_17_1::parse()
+{
+    m_result.clear();
+
+    if (!m_response_ok)
     {
-        return;
+        return m_result;
     }
 
-    CpuRegString RAX_str { data.RAX() };
-    CpuRegString RBX_str { data.RBX() };
-    CpuRegString RDX_str { data.RDX() };
-    CpuRegString RCX_str { data.RCX() };
+    CpuRegString RAX_str { m_RAX };
+    CpuRegString RBX_str { m_RBX };
+    CpuRegString RDX_str { m_RDX };
+    CpuRegString RCX_str { m_RCX };
 
     std::string str;
 
@@ -34,19 +47,6 @@ Parser_17_1::Parser_17_1(cpuid_response const &data) :
     ParserString pstr { "Part of Vendor Brand String", str };
 
     m_result.push_back(pstr.str());
-}
-
-Parser_17_1::~Parser_17_1()
-{
-    delete m_next;
-}
-
-parse_result_t Parser_17_1::parse()
-{
-    if (m_next != nullptr)
-    {
-        return m_next->parse();
-    }
 
     return m_result;
 }
