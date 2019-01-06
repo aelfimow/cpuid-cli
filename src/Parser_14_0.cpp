@@ -10,22 +10,13 @@
 
 
 Parser_14_0::Parser_14_0(cpuid_response const &data) :
+    m_RAX { data.RAX() },
+    m_RBX { data.RBX() },
+    m_RCX { data.RCX() },
+    m_RDX { data.RDX() },
     m_result { },
-    m_next { nullptr }
+    m_next { (0 == data.RCX_Command()) ? nullptr : new Parser_14_1 { data } }
 {
-    bool response_ok = (0 == data.RCX_Command());
-
-    if (response_ok)
-    {
-        parseRAX(data.RAX());
-        parseRBX(data.RBX());
-        parseRCX(data.RCX());
-        parseRDX(data.RDX());
-    }
-    else
-    {
-        m_next = new Parser_14_1 { data };
-    }
 }
 
 Parser_14_0::~Parser_14_0()
@@ -39,6 +30,13 @@ parse_result_t Parser_14_0::parse()
     {
         return m_next->parse();
     }
+
+    m_result.clear();
+
+    parseRAX(m_RAX);
+    parseRBX(m_RBX);
+    parseRCX(m_RCX);
+    parseRDX(m_RDX);
 
     return m_result;
 }
