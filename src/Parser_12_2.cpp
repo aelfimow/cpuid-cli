@@ -6,27 +6,39 @@
 
 
 Parser_12_2::Parser_12_2(cpuid_response const &data) :
+    m_RAX { data.RAX() },
+    m_RBX { data.RBX() },
+    m_RCX { data.RCX() },
+    m_RDX { data.RDX() },
     m_result { },
-    m_next { nullptr }
+    m_response_ok { 2 <= data.RCX_Command() }
 {
-    bool response_ok = (2 <= data.RCX_Command());
+}
 
-    if (!response_ok)
+Parser_12_2::~Parser_12_2()
+{
+}
+
+parse_result_t Parser_12_2::parse()
+{
+    m_result.clear();
+
+    if (!m_response_ok)
     {
-        return;
+        return m_result;
     }
 
-    bit_extractor extr { data.RAX() };
+    bit_extractor extr { m_RAX };
 
     bool subleaf_valid = (1 == extr.extract(3, 0));
 
     if (!subleaf_valid)
     {
-        return;
+        return m_result;
     }
 
-    bit_extractor extr1 { data.RAX() };
-    bit_extractor extr2 { data.RBX() };
+    bit_extractor extr1 { m_RAX };
+    bit_extractor extr2 { m_RBX };
 
     size_t physAddr1 = (extr2.extract(19, 0) << 32) + (extr1.extract(31, 12) << 12);
 
@@ -40,8 +52,8 @@ Parser_12_2::Parser_12_2(cpuid_response const &data) :
         m_result.push_back(pstr.str());
     }
 
-    bit_extractor extr3 { data.RCX() };
-    bit_extractor extr4 { data.RDX() };
+    bit_extractor extr3 { m_RCX };
+    bit_extractor extr4 { m_RDX };
 
     size_t size = (extr4.extract(19, 0) << 32) + (extr3.extract(31, 12) << 12);
 
@@ -53,19 +65,6 @@ Parser_12_2::Parser_12_2(cpuid_response const &data) :
         };
 
         m_result.push_back(pstr.str());
-    }
-}
-
-Parser_12_2::~Parser_12_2()
-{
-    delete m_next;
-}
-
-parse_result_t Parser_12_2::parse()
-{
-    if (m_next != nullptr)
-    {
-        return m_next->parse();
     }
 
     return m_result;
