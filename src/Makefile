@@ -14,20 +14,20 @@ all:
 	$(error Missing argument)
 
 windows: compile cpuid_windows
-	g++ *.o -o cpuid-cli.exe ${CXXFLAGS} ${WARNINGS}
+	$(CXX) *.o -o cpuid-cli.exe $(CXXFLAGS)
 
 linux: compile cpuid_linux
-	g++ *.o -o cpuid-cli ${CXXFLAGS} ${WARNINGS}
+	$(CXX) *.o -o cpuid-cli $(CXXFLAGS)
 
 compile: $(FILES_OBJ)
 
 cpuid_windows:
-	as cpuid_func_windows.S -o cpuid_func.o --64
+	$(AS) cpuid_func_windows.S -o cpuid_func.o --64
 
 cpuid_linux:
-	as cpuid_func_linux.S -o cpuid_func.o --64
+	$(AS) cpuid_func_linux.S -o cpuid_func.o --64
 
 deps:
-	g++ -MM *.cpp > Makefile.files
+	$(CXX) -MM $(FILES) > Makefile.files
 
 include Makefile.files
