@@ -24,7 +24,11 @@ Parser_4_0::~Parser_4_0()
 
 parse_result_t Parser_4_0::parse()
 {
-    m_result.clear();
+    if (0 != m_result.size())
+    {
+        return m_result;
+    }
+
     m_moreCaches = false;
 
     parseRAX(m_RAX);
