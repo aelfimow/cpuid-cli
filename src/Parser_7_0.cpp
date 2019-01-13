@@ -24,7 +24,11 @@ Parser_7_0::~Parser_7_0()
 
 parse_result_t Parser_7_0::parse()
 {
-    m_result.clear();
+    if (0 != m_result.size())
+    {
+        return m_result;
+    }
+
     m_infoAvail = false;
 
     parseRAX(m_RAX);
