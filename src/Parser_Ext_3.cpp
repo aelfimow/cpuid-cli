@@ -23,7 +23,10 @@ Parser_Ext_3::~Parser_Ext_3()
 
 parse_result_t Parser_Ext_3::parse()
 {
-    m_result.clear();
+    if (0 != m_result.size())
+    {
+        return m_result;
+    }
 
     CpuRegString RAX_str { m_RAX };
     CpuRegString RBX_str { m_RBX };
