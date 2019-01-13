@@ -28,7 +28,10 @@ parse_result_t Parser_F_0::parse()
         return m_next->parse();
     }
 
-    m_result.clear();
+    if (0 != m_result.size())
+    {
+        return m_result;
+    }
 
     parseRAX(m_RAX);
     parseRBX(m_RBX);
