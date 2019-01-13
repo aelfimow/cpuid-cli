@@ -25,7 +25,10 @@ Parser_D_1::~Parser_D_1()
 
 parse_result_t Parser_D_1::parse()
 {
-    m_result.clear();
+    if (0 != m_result.size())
+    {
+        return m_result;
+    }
 
     if (m_response_ok)
     {
