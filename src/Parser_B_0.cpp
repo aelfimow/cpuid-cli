@@ -25,7 +25,11 @@ Parser_B_0::~Parser_B_0()
 
 parse_result_t Parser_B_0::parse()
 {
-    m_result.clear();
+    if (0 != m_result.size())
+    {
+        return m_result;
+    }
+
     sub_leaf_valid = false;
     shift_value = 0;
 
