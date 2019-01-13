@@ -23,7 +23,10 @@ Parser_2_0::~Parser_2_0()
 
 parse_result_t Parser_2_0::parse()
 {
-    m_result.clear();
+    if (0 != m_result.size())
+    {
+        return m_result;
+    }
 
     size_t const regs[] { (m_RAX & 0xFFFFFF00), m_RBX, m_RCX, m_RDX };
 
