@@ -21,7 +21,10 @@ Parser_10_3::~Parser_10_3()
 
 parse_result_t Parser_10_3::parse()
 {
-    m_result.clear();
+    if (0 != m_result.size())
+    {
+        return m_result;
+    }
 
     parseRAX(m_RAX);
     parseRBX(m_RBX);
