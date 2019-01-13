@@ -20,7 +20,10 @@ Parser_Ext_8::~Parser_Ext_8()
 
 parse_result_t Parser_Ext_8::parse()
 {
-    m_result.clear();
+    if (0 != m_result.size())
+    {
+        return m_result;
+    }
 
     parseRAX(m_RAX);
     parseRBX(m_RBX);
