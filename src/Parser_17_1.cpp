@@ -25,9 +25,12 @@ Parser_17_1::~Parser_17_1()
 
 parse_result_t Parser_17_1::parse()
 {
-    m_result.clear();
-
     if (!m_response_ok)
+    {
+        return m_result;
+    }
+
+    if (0 != m_result.size())
     {
         return m_result;
     }
