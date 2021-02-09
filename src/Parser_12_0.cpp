@@ -83,7 +83,7 @@ void Parser_12_0::parseRDX(size_t value)
     bit_extractor extr { value };
 
     {
-        size_t size = (1 << extr.extract(7, 0));
+        size_t size = (1U << extr.extract(7, 0));
 
         ParserString pstr
         {
@@ -95,7 +95,7 @@ void Parser_12_0::parseRDX(size_t value)
     }
 
     {
-        size_t size = (1 << extr.extract(15, 8));
+        size_t size = (1U << extr.extract(15, 8));
 
         ParserString pstr
         {
