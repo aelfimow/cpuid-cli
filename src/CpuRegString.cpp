@@ -7,7 +7,7 @@
 CpuRegString::CpuRegString(size_t value) :
     m_str { }
 {
-    auto toChar = [](size_t value) { return static_cast<char>(value); };
+    auto toChar = [](size_t v) { return static_cast<char>(v); };
 
     bit_extractor bits { value };
 
