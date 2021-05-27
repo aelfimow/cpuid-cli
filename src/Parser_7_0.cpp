@@ -146,4 +146,30 @@ void Parser_7_0::parseRCX(size_t value)
 void Parser_7_0::parseRDX(size_t value)
 {
     bit_extractor extr { value };
+
+    std::map<size_t, std::string> const table
+    {
+        { 2, "AVX512_4VNNIW" },
+        { 3, "AVX512_4FMAPS" },
+        { 4, "Fast Short REP MOV" },
+        { 8, "AVX512_VP2INTERSECT" },
+        { 10, "MD_CLEAR supported" },
+        { 15, "Hybrid. The processor is identified as a hybrid part" },
+        { 18, "PCONFIG. Supports PCONFIG" },
+        { 20, "CET_IBT. Supports CET indirect branch tracking features" },
+        { 26, "Enumerates support for IBRS and IBPB" },
+        { 27, "Enumerates support for single thread indirect branch predictors (STIBP)" },
+        { 28, "Enumerates support for L1D_FLUSH" },
+        { 29, "Enumerates support for the IA32_ARCH_CAPABILITIES MSR" },
+        { 30, "Enumerates support for the IA32_CORE_CAPABILITIES MSR" },
+        { 31, "Enumerates support for Speculative Store Bypass Disable (SSBD)" }
+    };
+
+    for (auto &t: table)
+    {
+        if (extr.extract(t.first))
+        {
+            m_result.push_back(t.second);
+        }
+    }
 }
