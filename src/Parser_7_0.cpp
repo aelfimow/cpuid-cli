@@ -64,13 +64,22 @@ void Parser_7_0::parseRBX(size_t value)
         { 13, "Deprecates FPU CS and FPU DS values" },
         { 14, "MPX. Memory Protection Extensions" },
         { 15, "RDT-A. Resource Director Technology Allocation capability" },
+        { 16, "AVX512F" },
+        { 17, "AVX512DQ" },
         { 18, "RDSEED" },
         { 19, "ADX" },
         { 20, "SMAP. Supports Supervisor-Mode Access Prevention (and the CLAC/STAC instructions)" },
+        { 21, "AVX512_IFMA" },
+        { 22, "Reserved" },
         { 23, "CLFLUSHOPT" },
         { 24, "CLWB" },
         { 25, "Intel Processor Trace." },
-        { 29, "SHA. Secure Hash Algorithm Extensions" }
+        { 26, "AVX512PF" },
+        { 27, "AVX512ER" },
+        { 28, "AVX512CD" },
+        { 29, "SHA. Secure Hash Algorithm Extensions" },
+        { 30, "AVX512BW" },
+        { 31, "AVX512VL" }
     };
 
     for (auto &t: table)
