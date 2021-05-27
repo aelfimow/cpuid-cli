@@ -21,8 +21,6 @@ class Parser_7_0 : public IParser
 
         parse_result_t m_result;
 
-        bool m_infoAvail;
-
         void parseRAX(size_t value);
         void parseRBX(size_t value);
         void parseRCX(size_t value);
