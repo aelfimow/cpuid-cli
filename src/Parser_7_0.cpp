@@ -97,12 +97,33 @@ void Parser_7_0::parseRCX(size_t value)
 
     std::map<size_t, std::string> const table
     {
-        {  0, "PREFETCHWT1" },
-        {  2, "UMIP. Supports user-mode instruction prevention" },
-        {  3, "PKU. Supports protection keys for user-mode pages" },
-        {  4, "OSPKE. OS has set CR4.PKE to enable protection keys (and the RDPKRU/WRPKRU instructions)" },
-        { 22, "RDPID. Supports Read Processor ID" },
-        { 30, "SGX_LC. Supports SGX Launch Configuration" }
+        { 0, "PREFETCHWT1" },
+        { 1, "AVX512_VBMI" },
+        { 2, "UMIP. Supports user-mode instruction prevention" },
+        { 3, "PKU. Supports protection keys for user-mode pages" },
+        { 4, "OSPKE. OS has set CR4.PKE to enable protection keys (and the RDPKRU/WRPKRU instructions)" },
+        { 5, "WAITPKG" },
+        { 6, "AVX512_VBMI2" },
+        { 7, "CET_SS. Supports CET shadow stack features" },
+        { 8, "GFNI" },
+        { 9, "VAES" },
+        { 10, "VPCLMULQDQ" },
+        { 11, "AVX512_VNNI" },
+        { 12, "AVX512_BITALG" },
+        { 13, "TME_EN" },
+        { 14, "AVX512_VPOPCNTDQ" },
+        { 15, "Reserved" },
+        { 16, "LA57. Supports 57-bit linear addresses and five-level paging" },
+        { 22, "RDPID and IA32_TSC_AUX are available" },
+        { 23, "KL. Supports Key Locker" },
+        { 24, "Reserved" },
+        { 25, "CLDEMOTE. Supports cache line demote" },
+        { 26, "Reserved" },
+        { 27, "MOVDIRI. Supports MOVDIRI" },
+        { 28, "MOVDIR64B. Supports MOVDIR64B" },
+        { 29, "Reserved" },
+        { 30, "SGX_LC. Supports SGX Launch Configuration" },
+        { 31, "PKS. Supports protection keys for supervisor-mode pages" }
     };
 
     for (auto &t: table)
